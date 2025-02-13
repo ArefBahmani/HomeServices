@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="AddressEntitie\AppService\" />
+    <Folder Include="AddressEntitie\Service\" />
+    <Folder Include="CategoryEntitie\AppService\" />
+    <Folder Include="CategoryEntitie\Dtos\" />
+    <Folder Include="CategoryEntitie\Enums\" />
+    <Folder Include="CategoryEntitie\Service\" />
+    <Folder Include="CategoryServiceEntitie\AppService\" />
+    <Folder Include="CategoryServiceEntitie\Enums\" />
+    <Folder Include="CategoryServiceEntitie\Service\" />
+    <Folder Include="ProvinceEntite\AppService\" />
+    <Folder Include="ProvinceEntite\Dtos\" />
+    <Folder Include="ProvinceEntite\Enums\" />
+    <Folder Include="ProvinceEntite\Service\" />
+    <Folder Include="CommentEntite\AppService\" />
+    <Folder Include="CommentEntite\Service\" />
+    <Folder Include="RequestEntite\AppService\" />
+    <Folder Include="RequestEntite\Dtos\" />
+    <Folder Include="RequestEntite\Service\" />
+    <Folder Include="SubCategoryEntite\AppService\" />
+    <Folder Include="SubCategoryEntite\Dtos\" />
+    <Folder Include="SubCategoryEntite\Enums\" />
+    <Folder Include="SubCategoryEntite\Service\" />
+    <Folder Include="SuggestionEntite\AppService\" />
+    <Folder Include="SuggestionEntite\Enum\" />
+    <Folder Include="SuggestionEntite\Service\" />
+    <Folder Include="UserEntite\AppService\" />
+    <Folder Include="UserEntite\Dtos\" />
+    <Folder Include="UserEntite\Service\" />
+  </ItemGroup>
+
+</Project>

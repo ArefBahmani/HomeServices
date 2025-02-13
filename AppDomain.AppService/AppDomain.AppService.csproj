@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="AddressEntite\" />
+    <Folder Include="CategoryEntite\" />
+    <Folder Include="CategoryServiceEntite\" />
+    <Folder Include="CommentEntite\" />
+    <Folder Include="SuggestionEntite\" />
+    <Folder Include="ProvinceEntite\" />
+    <Folder Include="RequestEntite\" />
+    <Folder Include="SubCategoryEntite\" />
+    <Folder Include="UserEntite\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AppDomainCore\AppDomainCore.csproj" />
+  </ItemGroup>
+
+</Project>

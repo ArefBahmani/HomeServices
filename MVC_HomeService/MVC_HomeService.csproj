@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AppDomain.AppService\AppDomain.AppService.csproj" />
+    <ProjectReference Include="..\AppDomain.Service\AppDomain.Service.csproj" />
+    <ProjectReference Include="..\AppDomainCore\AppDomainCore.csproj" />
+    <ProjectReference Include="..\AppInfer.Data.Repo.Ef\AppInfer.Data.Repo.Ef.csproj" />
+    <ProjectReference Include="..\AppInfer.Db.Sql.Ef\AppInfer.Db.Sql.Ef.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Img\Address\" />
+    <Folder Include="wwwroot\Img\Category\" />
+    <Folder Include="wwwroot\Img\CategoryService\" />
+    <Folder Include="wwwroot\Img\Comment\" />
+    <Folder Include="wwwroot\Img\Admin\" />
+    <Folder Include="wwwroot\Img\Expert\" />
+    <Folder Include="wwwroot\Img\Customer\" />
+    <Folder Include="wwwroot\Img\SubCategory\" />
+  </ItemGroup>
+
+</Project>
