@@ -21,11 +21,15 @@ namespace AppInfer.Data.Repo.Ef.UserEntite
         {
             var model = new Admin()
             {
-                Balance = admin.Balance,
+               
                 FirstName = admin.FirstName,
                 LastName = admin.LastName,
                 Gender = admin.Gender,
             };
+            if (model == null)
+            {
+                return false;
+            }
             await _context.AddAsync(model);
             await _context.SaveChangesAsync(cancellation);
             return true;
@@ -34,6 +38,10 @@ namespace AppInfer.Data.Repo.Ef.UserEntite
         public async Task<bool> Delete(int adminId, CancellationToken cancellation)
         {
             var model = await _context.Admin.FirstOrDefaultAsync(x=>x.Id == adminId,cancellation);
+            if (model == null)
+            {
+                return false;
+            }
             model.IsDeleted = true;
             await _context.SaveChangesAsync(cancellation);
             return true;
@@ -42,6 +50,10 @@ namespace AppInfer.Data.Repo.Ef.UserEntite
         public async Task<bool> Edit(int adminId, Admin admin, CancellationToken cancellation)
         {
             var model = await _context.Admin.FirstOrDefaultAsync(x=>x.Id==adminId,cancellation);
+            if (model == null)
+            {
+                return false;
+            }
             model = new Admin()
             {
                 Balance = admin.Balance,

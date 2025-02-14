@@ -27,6 +27,10 @@ namespace AppInfer.Data.Repo.Ef.CategoryServiceEntite
                 Name = categoryService.Name,
                 Titel = categoryService.Titel,
             };
+            if (model == null)
+            {
+                return false;
+            }
             await _context.CategoryServices.AddAsync(model);
             return true;
         }
@@ -34,6 +38,10 @@ namespace AppInfer.Data.Repo.Ef.CategoryServiceEntite
         public async Task<bool> Delete(int id, CancellationToken cancellationToken)
         {
             var model = await _context.CategoryServices.FirstOrDefaultAsync(x=>x.Id == id,cancellationToken);
+            if (model == null)
+            {
+                return false;
+            }
             model.IsDeleted = true;
            await _context.SaveChangesAsync(cancellationToken);
             return true;
@@ -42,6 +50,10 @@ namespace AppInfer.Data.Repo.Ef.CategoryServiceEntite
         public async Task<bool> Edit(int id, CategoryService categoryService, CancellationToken cancellationToken)
         {
             var model = await _context.CategoryServices.FirstOrDefaultAsync(x => x.Id == id,cancellationToken);
+            if (model == null)
+            {
+                return false;
+            }
             model = new CategoryService()
             {
                 BidPrice = categoryService.BidPrice,

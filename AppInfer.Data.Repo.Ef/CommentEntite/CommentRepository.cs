@@ -26,6 +26,10 @@ namespace AppInfer.Data.Repo.Ef.CommentEntite
                 SaveTime = DateTime.Now,
 
             };
+            if (model == null)
+            {
+                return false;
+            }
             await _context.Comments.AddAsync(model);
            await _context.SaveChangesAsync(cancellationToken);
             return true;
@@ -34,6 +38,10 @@ namespace AppInfer.Data.Repo.Ef.CommentEntite
         public async Task<bool> Delete(int id, CancellationToken cancellationToken)
         {
            var model = await _context.Comments.FirstOrDefaultAsync(x => x.Id == id,cancellationToken);
+            if (model == null)
+            {
+                return false;
+            }
             model.IsDeleted = true;
             await _context.SaveChangesAsync(cancellationToken);
             return true;
@@ -60,6 +68,10 @@ namespace AppInfer.Data.Repo.Ef.CommentEntite
         public async Task<bool> SetReaction(int expertId, int reaction, CancellationToken cancellationToken)
         {
             var comment = await _context.Comments.FirstOrDefaultAsync(e=>e.ExpertId == expertId,cancellationToken);
+            if (comment == null)
+            {
+                return false;
+            }
             comment.Reaction = reaction;
             await _context.SaveChangesAsync(cancellationToken);
             return true;
@@ -69,7 +81,10 @@ namespace AppInfer.Data.Repo.Ef.CommentEntite
         public async Task<bool> Update(int id, Comment comment, CancellationToken cancellationToken)
         {
            var model = await _context.Comments.FirstOrDefaultAsync(x=> x.Id == id,cancellationToken);
-
+            if (model == null)
+            {
+                return false;
+            }
             model = new Comment()
             {
                 Reaction = comment.Reaction,

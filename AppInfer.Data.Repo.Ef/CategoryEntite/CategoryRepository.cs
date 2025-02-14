@@ -27,6 +27,10 @@ namespace AppInfer.Data.Repo.Ef.CategoryEntite
                 IsDeleted  = false,
 
             };
+            if(newModel == null )
+            {
+                return false;
+            }
             await _context.Categories.AddAsync(newModel);
             await _context.SaveChangesAsync(cancellationToken);
             return true;
@@ -36,6 +40,10 @@ namespace AppInfer.Data.Repo.Ef.CategoryEntite
         public async Task<bool> Delete(int categoryId, CancellationToken cancellationToken)
         {
           var model = await _context.Categories.FirstOrDefaultAsync(x=>x.Id == categoryId,cancellationToken);
+            if (model == null)
+            {
+                return false;
+            }
             model.IsDeleted = true;
            await _context.SaveChangesAsync(cancellationToken);
             return true;
@@ -63,6 +71,10 @@ namespace AppInfer.Data.Repo.Ef.CategoryEntite
                 IsDeleted = false,
                 Name = category.Name,
             };
+            if (model == null)
+            {
+                return false;
+            }
             await _context.SaveChangesAsync(cancellationToken);
             return true;
         }

@@ -30,6 +30,10 @@ namespace AppInfer.Data.Repo.Ef.SuggestionEntite
                 SuggestionDate = suggestion.SuggestionDate
 
             };
+            if (model == null)
+            {
+                return false;
+            }
             await _context.AddAsync(model);
             await _context.SaveChangesAsync(cancellationToken);
             return true;
@@ -38,6 +42,10 @@ namespace AppInfer.Data.Repo.Ef.SuggestionEntite
         public async Task<bool> Delete(int suggestionId, CancellationToken cancellationToken)
         {
           var model = await _context.Suggestions.FirstOrDefaultAsync(x => x.Id == suggestionId,cancellationToken);
+            if (model == null)
+            {
+                return false;
+            }
             model.IsDeleted = true;
             await _context.SaveChangesAsync(cancellationToken);
             return true;
@@ -52,12 +60,20 @@ namespace AppInfer.Data.Repo.Ef.SuggestionEntite
         public async Task<Suggestion> GetById(int id, CancellationToken cancellationToken)
         {
             var model = await _context.Suggestions.AsNoTracking().FirstOrDefaultAsync(x=>x.Id == id,cancellationToken);
+            if (model == null)
+            {
+                return null;
+            }
             return model;
         }
 
         public async Task<bool> Update(int suggestionId, Suggestion suggestion, CancellationToken cancellationToken)
         {
             var model = await _context.Suggestions.FirstOrDefaultAsync(x => x.Id == suggestionId, cancellationToken);
+            if (model == null)
+            {
+                return false;
+            }
             model = new Suggestion()
             {
                 UpdateAt = DateTime.Now,

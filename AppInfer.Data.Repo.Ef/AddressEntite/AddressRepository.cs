@@ -28,14 +28,23 @@ namespace AppInfer.Data.Repo.Ef.AddressEntite
                 CreatAt = DateTime.Now,
 
             };
+            if(newModel == null)
+            {
+                return false;
+            }
             await _context.Addresses.AddAsync(newModel);
           await  _context.SaveChangesAsync(cancellationToken);
             return true;
+            
         }
 
         public async Task<bool> Delete(int addressId, CancellationToken cancellationToken)
         {
             var target = await _context.Addresses.FirstOrDefaultAsync(x => x.Id == addressId, cancellationToken);
+            if (target == null)
+            {
+                return false;
+            }
             target.IsDeleted = true;
           await  _context.SaveChangesAsync(cancellationToken);
             return true;
@@ -45,6 +54,7 @@ namespace AppInfer.Data.Repo.Ef.AddressEntite
         public async Task<Address> GetAddressById(int addressId, CancellationToken cancellationToken)
         {
             var model = await _context.Addresses.AsNoTracking().FirstOrDefaultAsync(x => x.Id == addressId, cancellationToken);
+
             return model;
 
         }
@@ -70,6 +80,10 @@ namespace AppInfer.Data.Repo.Ef.AddressEntite
                 Street = address.Street,
                 Province = address.Province,
             };
+            if (model == null)
+            {
+                return false;
+            }
            await _context.SaveChangesAsync(cancellationToken);
             return true;
         }

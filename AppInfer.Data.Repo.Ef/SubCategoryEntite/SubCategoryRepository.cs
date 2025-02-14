@@ -25,6 +25,10 @@ namespace AppInfer.Data.Repo.Ef.SubCategoryEntite
                 Name = subCategory.Name,
                 
             };
+            if (model == null)
+            {
+                return false;
+            }
             await _context.AddAsync(model);
             await _context.SaveChangesAsync(cancellationToken);
             return true;
@@ -33,6 +37,10 @@ namespace AppInfer.Data.Repo.Ef.SubCategoryEntite
         public async Task<bool> Delete(int id, CancellationToken cancellationToken)
         {
           var model = await _context.SubCategories.FirstOrDefaultAsync(c => c.Id == id,cancellationToken);
+            if (model == null)
+            {
+                return false;
+            }
             model.IsDeleted = true;
             await _context.SaveChangesAsync(cancellationToken);
             return true;
@@ -54,6 +62,10 @@ namespace AppInfer.Data.Repo.Ef.SubCategoryEntite
         public async Task<bool> Update(int id, SubCategory subCategory, CancellationToken cancellationToken)
         {
             var model = await _context.SubCategories.FirstOrDefaultAsync(x=> x.Id == id,cancellationToken);
+            if (model == null)
+            {
+                return false;
+            }
             model = new SubCategory()
             {
                 Name = subCategory.Name,

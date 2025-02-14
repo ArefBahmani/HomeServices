@@ -24,6 +24,10 @@ namespace AppInfer.Data.Repo.Ef.UserEntite
                 PhoneNumber = expert.PhoneNumber,
                 CreatAt = DateTime.Now,
             };
+            if (model == null)
+            {
+                return false;
+            }
             await _context.AddAsync(model, cancellation);
             await _context.SaveChangesAsync(cancellation);
             return true;
@@ -32,6 +36,10 @@ namespace AppInfer.Data.Repo.Ef.UserEntite
         public async Task<bool> Delete(int expertId, CancellationToken cancellation)
         {
             var model = await _context.Experts.FirstOrDefaultAsync(x=> x.Id == expertId,cancellation);
+            if (model == null)
+            {
+                return false;
+            }
             model.IsDeleted = true;
             await _context.SaveChangesAsync(cancellation);
             return true;
@@ -40,6 +48,10 @@ namespace AppInfer.Data.Repo.Ef.UserEntite
         public async Task<bool> Edit(int expertId, Expert expert, CancellationToken cancellation)
         {
             var model = await _context.Experts.FirstOrDefaultAsync(x=>x.Id == expertId,cancellation);
+            if (model == null)
+            {
+                return false;
+            }
             model = new Expert()
             {
                 ImageProfile = expert.ImageProfile,

@@ -21,6 +21,10 @@ namespace AppInfer.Data.Repo.Ef.RequestEntite
         public async Task<bool> ChangeStatus(StatusEnum status, int requestId, CancellationToken cancellationToken)
         {
             var req = await _context.Requests.FirstOrDefaultAsync(x=>x.Id == requestId,cancellationToken);
+            if (req == null)
+            {
+                return false;
+            }
             req.Status = status;
             await _context.SaveChangesAsync(cancellationToken);
             return true;
@@ -40,6 +44,10 @@ namespace AppInfer.Data.Repo.Ef.RequestEntite
                 Titel = request.Titel,
        
             };
+            if (req == null)
+            {
+                return false;
+            }
             await _context.AddAsync(req);
             await _context.SaveChangesAsync(cancellationToken);
             return true;
@@ -48,6 +56,10 @@ namespace AppInfer.Data.Repo.Ef.RequestEntite
         public async Task<bool> Delete(int requestId, CancellationToken cancellationToken)
         {
           var model = await _context.Requests.FirstOrDefaultAsync(x=> x.Id == requestId,cancellationToken);
+            if (model == null)
+            {
+                return false;
+            }
             model.IsDeleted = true;
             await _context.SaveChangesAsync(cancellationToken);
             return true;
@@ -70,6 +82,10 @@ namespace AppInfer.Data.Repo.Ef.RequestEntite
         public async Task<bool> Update(int requestId, Request request, CancellationToken cancellationToken)
         {
             var model = await _context.Requests.FirstOrDefaultAsync(x=> x.Id == requestId,cancellationToken);
+            if (model == null)
+            {
+                return false;
+            }
             model = new Request()
             {
                 CategoryServiceId = request.CategoryServiceId,

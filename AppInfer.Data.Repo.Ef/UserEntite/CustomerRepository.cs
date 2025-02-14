@@ -26,6 +26,10 @@ namespace AppInfer.Data.Repo.Ef.UserEntite
                 PhoneNumber = customer.PhoneNumber,
                 
             };
+            if (model == null)
+            {
+                return false;
+            }
             await _context.AddAsync(model);
             await _context.SaveChangesAsync(cancellation);
             return true;
@@ -34,6 +38,10 @@ namespace AppInfer.Data.Repo.Ef.UserEntite
         public async Task<bool> Delete(int customerId, CancellationToken cancellation)
         {
             var model = await _context.Customers.FirstOrDefaultAsync(x=> x.Id == customerId,cancellation);
+            if (model == null)
+            {
+                return false;
+            }
             model.IsDeleted = true;
             await _context.SaveChangesAsync(cancellation);
             return true;
@@ -42,6 +50,10 @@ namespace AppInfer.Data.Repo.Ef.UserEntite
         public async Task<bool> Edit(int CustomerId, Customer customer, CancellationToken cancellation)
         {
             var model = await _context.Customers.FirstOrDefaultAsync(x=> x.Id == CustomerId,cancellation);
+            if (model == null)
+            {
+                return false;
+            }
             model = new Customer()
             {
                 Address = customer.Address,
