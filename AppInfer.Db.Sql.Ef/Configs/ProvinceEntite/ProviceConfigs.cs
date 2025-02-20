@@ -14,6 +14,7 @@ namespace AppInfer.Db.Sql.Ef.Configs.ProvinceEntite
         public void Configure(EntityTypeBuilder<Province> builder)
         {
             builder.HasKey(x => x.Id);
+            builder.HasMany(x => x.Addresses).WithOne(x => x.Province);
             builder.HasData(new Province { Id = 1, Name = "آذربایجان شرقی" },
     new Province { Id = 2, Name = "آذربایجان غربی" },
     new Province { Id = 3, Name = "اردبیل" },

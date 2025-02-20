@@ -19,7 +19,7 @@ namespace AppDomainCore.CommentEntite.Entite
 
         [Range(1,5)]
         public int? Reaction { get; set; }
-
+        public string Description { get; set; }
         public Customer Customer { get; set; }
         public int CustomerId { get; set; }
 

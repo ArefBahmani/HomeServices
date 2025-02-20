@@ -19,7 +19,7 @@ namespace AppInfer.Db.Sql.Ef.Configs.UserEntite
 
             builder.Property(a => a.Balance)
           .HasPrecision(18, 4);
-
+         
 
             builder.HasData(new Admin
             {
@@ -27,7 +27,8 @@ namespace AppInfer.Db.Sql.Ef.Configs.UserEntite
                 FirstName = "عارف",
                 LastName = "بهمنی نژاد",
                 Balance = 1000000000,
-                Gender = GenderEnum.Man
+                Gender = GenderEnum.Man,
+                ApplicationUserId = 1,
             });
         }
     }

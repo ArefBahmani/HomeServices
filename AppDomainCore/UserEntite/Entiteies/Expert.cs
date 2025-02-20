@@ -30,6 +30,8 @@ namespace AppDomainCore.UserEntite.Entiteies
         public List<CategoryService>? CategoryServices { get; set; }
         public List<Comment>? Comments { get; set; }
         public List<Suggestion>? Suggestions { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
+        public int ApplicationUserId { get; set; }
 
         [DisplayName("آدرس")]
         public Address? Address { get; set; }

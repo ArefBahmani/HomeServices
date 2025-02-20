@@ -29,7 +29,8 @@ namespace AppInfer.Db.Sql.Ef.Configs.UserEntite
                 LastName = "مصلحی",
                 PhoneNumber = "+989122152580",
                 Gender = GenderEnum.Man,
-                CreatAt = new DateTime(2024, 1, 1, 12, 0, 0)
+                CreatAt = new DateTime(2024, 1, 1, 12, 0, 0),
+                ApplicationUserId = 4
             },
             new Customer
             {
@@ -38,7 +39,8 @@ namespace AppInfer.Db.Sql.Ef.Configs.UserEntite
                 LastName = "روشنی",
                 PhoneNumber = "+989124488954",
                 Gender = GenderEnum.Women,
-                CreatAt = new DateTime(2024, 1, 1, 12, 0, 0)
+                CreatAt = new DateTime(2024, 1, 1, 12, 0, 0),
+                ApplicationUserId = 5
             }
 
 

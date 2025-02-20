@@ -15,9 +15,10 @@ namespace AppInfer.Db.Sql.Ef.Configs.CommentEntite
         {
            builder.HasKey(x => x.Id);
             builder.HasOne(c => c.Customer)
-                .WithMany(c => c.Comments);
-            builder.HasOne(e=>e.Expert)
-                .WithMany(c=>c.Comments);
+                .WithMany(c => c.Comments).HasForeignKey(x=>x.CustomerId).OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(e => e.Expert)
+                .WithMany(c => c.Comments).HasForeignKey(x=>x.ExpertId).OnDelete(DeleteBehavior.Restrict);
 
             builder.HasData(new Comment
             {
@@ -26,7 +27,8 @@ namespace AppInfer.Db.Sql.Ef.Configs.CommentEntite
                 ExpertId = 2,
                 Reaction = 3,
                 Titel = "سطح کاری متوسطی داشتن",
-                SaveTime = new DateTime(2024, 1, 1, 12, 0, 0)
+                SaveTime = new DateTime(2024, 1, 1, 12, 0, 0),
+                Description = "لطفا رسیدگی شود"
             });
         }
     }

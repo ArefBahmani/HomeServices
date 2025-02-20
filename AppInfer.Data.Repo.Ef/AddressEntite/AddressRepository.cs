@@ -1,4 +1,5 @@
 ﻿using AppDomainCore.AddressEntitie.Data;
+using AppDomainCore.AddressEntitie.Dtos;
 using AppDomainCore.AddressEntitie.Entite;
 using AppInfer.Db.Sql.Ef.Dbase;
 using Microsoft.EntityFrameworkCore;
@@ -17,25 +18,23 @@ namespace AppInfer.Data.Repo.Ef.AddressEntite
         {
             _context = appDbContext;
         }
-        public async Task<bool> Creat(Address address, CancellationToken cancellationToken)
+     
+        public async Task<bool> Creat(CreateAddressDto address, CancellationToken cancellationToken)
         {
             var newModel = new Address()
             {
-
                 PostalCode = address.PostalCode,
                 Province = address.Province,
                 Street = address.Street,
                 CreatAt = DateTime.Now,
-
             };
             if(newModel == null)
             {
                 return false;
             }
-            await _context.Addresses.AddAsync(newModel);
-          await  _context.SaveChangesAsync(cancellationToken);
+            await _context.Addresses.AddAsync(newModel, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
             return true;
-            
         }
 
         public async Task<bool> Delete(int addressId, CancellationToken cancellationToken)
@@ -65,7 +64,9 @@ namespace AppInfer.Data.Repo.Ef.AddressEntite
             return models;
         }
 
-        public async Task<bool> Update(int addressId,Address address, CancellationToken cancellationToken)
+       
+
+        public async Task<bool> Update(int addressId, UpdateAddressDto address, CancellationToken cancellationToken)
         {
             var model = await _context.Addresses.FirstOrDefaultAsync(x => x.Id == addressId, cancellationToken);
             model = new Address()
@@ -84,7 +85,7 @@ namespace AppInfer.Data.Repo.Ef.AddressEntite
             {
                 return false;
             }
-           await _context.SaveChangesAsync(cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
             return true;
         }
     }

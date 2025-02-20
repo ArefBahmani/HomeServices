@@ -1,4 +1,5 @@
-﻿using AppDomainCore.CategoryEntitie.Entite;
+﻿using AppDomainCore.CategoryEntitie.Dtos;
+using AppDomainCore.CategoryEntitie.Entite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,9 @@ namespace AppDomainCore.CategoryEntitie.Data
 {
     public interface ICategoryRepository
     {
-        public Task<bool> Creat(Category category,CancellationToken cancellationToken);
+        public Task<bool> Creat(CategoryCreateDto category,CancellationToken cancellationToken);
         public Task<bool> Delete(int categoryId, CancellationToken cancellationToken);
-        public Task<bool> Update(int id,Category category,CancellationToken cancellationToken);
+        public Task<bool> Update(int id, CategoryUpdateDto category,CancellationToken cancellationToken);
         public Task<Category> GetCategory(int categoryId, CancellationToken cancellationToken);
         public Task<List<Category>> GetAllCategories(CancellationToken cancellationToken);
        

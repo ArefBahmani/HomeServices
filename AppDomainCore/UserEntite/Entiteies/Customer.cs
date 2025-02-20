@@ -27,6 +27,8 @@ namespace AppDomainCore.UserEntite.Entiteies
         public string? ImageProfile { get; set; }
         [StringLength(13,ErrorMessage ="شماره تماس شما باید 13 رقم داشته باشد و از پیش شماره +98 استفاده کنید")]
         public string? PhoneNumber { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
+        public int ApplicationUserId { get; set; }
         public decimal? Balance { get; set; }
         public List<Comment>? Comments { get; set; }
         public int? CommentId { get; set; }

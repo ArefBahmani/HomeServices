@@ -17,14 +17,14 @@ namespace AppInfer.Db.Sql.Ef.Configs.RequestEntite
         {
             builder.HasKey(x => x.Id);
             builder.HasOne(c => c.Customer)
-                .WithMany(r => r.Requests).HasForeignKey(x=>x.CustomerId).OnDelete(DeleteBehavior.NoAction);
+                .WithMany(r => r.Requests).HasForeignKey(x=>x.CustomerId);
 
             builder
         .Property(r => r.Price)
          .HasPrecision(18, 4);
 
             builder.HasOne(s => s.CategoryServices)
-                .WithMany(r => r.Requests).HasForeignKey(x=>x.CategoryServiceId).OnDelete(DeleteBehavior.NoAction);
+                .WithMany(r => r.Requests).HasForeignKey(x=>x.CategoryServiceId);
 
             builder.HasData(new Request
             {

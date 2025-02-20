@@ -1,4 +1,5 @@
 ﻿using AppDomainCore.UserEntite.Data;
+using AppDomainCore.UserEntite.Dtos.CustomerDtos;
 using AppDomainCore.UserEntite.Entiteies;
 using AppInfer.Db.Sql.Ef.Dbase;
 using Microsoft.EntityFrameworkCore;
@@ -17,21 +18,24 @@ namespace AppInfer.Data.Repo.Ef.UserEntite
         {
             _context = appDbContext;
         }
-        public async Task<bool> Add(Customer customer, CancellationToken cancellation)
+        
+
+        public async Task<bool> Add(CustomerCreateDto customer, CancellationToken cancellation)
         {
             var model = new Customer()
             {
-                
+
                 CreatAt = DateTime.Now,
                 PhoneNumber = customer.PhoneNumber,
-                
+
             };
             if (model == null)
             {
                 return false;
             }
-            await _context.AddAsync(model);
+            await _context.AddAsync(model,cancellation);
             await _context.SaveChangesAsync(cancellation);
+           
             return true;
         }
 
@@ -47,9 +51,11 @@ namespace AppInfer.Data.Repo.Ef.UserEntite
             return true;
         }
 
-        public async Task<bool> Edit(int CustomerId, Customer customer, CancellationToken cancellation)
+        
+
+        public async Task<bool> Edit(int CustomerId, CustomerUpdateDto customer, CancellationToken cancellation)
         {
-            var model = await _context.Customers.FirstOrDefaultAsync(x=> x.Id == CustomerId,cancellation);
+            var model = await _context.Customers.FirstOrDefaultAsync(x => x.Id == CustomerId, cancellation);
             if (model == null)
             {
                 return false;

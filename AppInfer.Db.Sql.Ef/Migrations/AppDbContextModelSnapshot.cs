@@ -193,6 +193,9 @@ namespace AppInfer.Db.Sql.Ef.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -542,6 +545,10 @@ namespace AppInfer.Db.Sql.Ef.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ExpertId")
                         .HasColumnType("int");
 
@@ -549,7 +556,6 @@ namespace AppInfer.Db.Sql.Ef.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int?>("Reaction")
-                        .HasMaxLength(5)
                         .HasColumnType("int");
 
                     b.Property<DateTime>("SaveTime")
@@ -573,6 +579,7 @@ namespace AppInfer.Db.Sql.Ef.Migrations
                         {
                             Id = 1,
                             CustomerId = 4,
+                            Description = "لطفا رسیدگی شود",
                             ExpertId = 2,
                             IsDeleted = false,
                             Reaction = 3,
@@ -855,6 +862,9 @@ namespace AppInfer.Db.Sql.Ef.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("ApplicationUserId")
+                        .HasColumnType("int");
+
                     b.Property<decimal?>("Balance")
                         .HasPrecision(18, 4)
                         .HasColumnType("decimal(18,4)");
@@ -876,10 +886,16 @@ namespace AppInfer.Db.Sql.Ef.Migrations
                     b.Property<DateTime>("LastUpdated")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("RegisterAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId")
+                        .IsUnique();
 
                     b.ToTable("Admin");
 
@@ -887,6 +903,7 @@ namespace AppInfer.Db.Sql.Ef.Migrations
                         new
                         {
                             Id = 1,
+                            ApplicationUserId = 1,
                             Balance = 1000000000m,
                             FirstName = "عارف",
                             Gender = 1,
@@ -897,6 +914,178 @@ namespace AppInfer.Db.Sql.Ef.Migrations
                         });
                 });
 
+            modelBuilder.Entity("AppDomainCore.UserEntite.Entiteies.ApplicationUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "75215198-b3df-4183-afd7-25eebfcec767",
+                            Email = "Admin@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@GMAIL.COM",
+                            NormalizedUserName = "ADMIN@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMDMO3vG3ukt6P/rcVnzyFuIribDnQuPla0rKsUv2Pqme0aeabGlNeDHaUKnvQArww==",
+                            PhoneNumber = "09913466961",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "17a9b230-7060-4657-ac35-cb38a7fc3acd",
+                            TwoFactorEnabled = false,
+                            UserName = "Admin@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "faed8428-5b59-4b3d-b372-82afdcbd90cb",
+                            Email = "Hosein@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "HOSEIN@GMAIL.COM",
+                            NormalizedUserName = "HOSEIN@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAENFbOszbSLQMnPpOACqfTo644imWUz2PXpd7jQAd6f+U0sHcnFrzAoKT3aZcp1VfNA==",
+                            PhoneNumber = "09913466961",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "5f4660b3-a96a-4f2c-853d-3f2b39f0d8eb",
+                            TwoFactorEnabled = false,
+                            UserName = "Hosein@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "675c5e7f-bce3-4202-9a2b-40c2507b1199",
+                            Email = "Javad@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "JAVAD@GMAIL.COM",
+                            NormalizedUserName = "JAVAD@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIofl400SuLdApz61dVCd093dGuwQG4oK4g3KRzOe6EhLMlxR1vDMpgYyKS+ixLEJg==",
+                            PhoneNumber = "09913466961",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "60268cf7-8671-440b-9e23-ef39aa86c47c",
+                            TwoFactorEnabled = false,
+                            UserName = "Javad@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "58c5c9bb-41ae-4d86-ade3-fc6c45bbe28f",
+                            Email = "Aref@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "AREF@GMAIL.COM",
+                            NormalizedUserName = "AREF@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOdnvn2IcUQVn1U7sLhuE9Lj0WWo1Va6PMiaReJBKmA4L+l7uHV8fDqy7NFk8HwrfQ==",
+                            PhoneNumber = "09913466961",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "605922ca-0d85-426e-83e8-672fd69c1457",
+                            TwoFactorEnabled = false,
+                            UserName = "Aref@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "9735e052-7606-44d5-90d4-a699a66e7b00",
+                            Email = "Saeid@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SAEID@GMAIL.COM",
+                            NormalizedUserName = "SAEID@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKZUxUbS6ugNKO2fDSosBSd21O3uGbeLSZ9/CFG0gAmEVcOIyRMYZXS2J0Rz7XzFlA==",
+                            PhoneNumber = "09913466961",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "592b06b3-362a-4d84-8d6e-6841e13e423f",
+                            TwoFactorEnabled = false,
+                            UserName = "Saeid@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "8e2563ca-642f-46f2-b66a-f79311373b06",
+                            Email = "Sahar@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SAHAR@GMAIL.COM",
+                            NormalizedUserName = "SAHAR@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAECdfp9fmG3/EFok1yRTkzkD1Xqru4YF9TK0ba79v98e9S3cPZug/Mt2nSZxQs1tjoQ==",
+                            PhoneNumber = "09913466961",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "0090d060-97eb-46c0-beec-e4f3e44f3f2b",
+                            TwoFactorEnabled = false,
+                            UserName = "Sahar@gmail.com"
+                        });
+                });
+
             modelBuilder.Entity("AppDomainCore.UserEntite.Entiteies.Customer", b =>
                 {
                     b.Property<int>("Id")
@@ -904,6 +1093,9 @@ namespace AppInfer.Db.Sql.Ef.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ApplicationUserId")
+                        .HasColumnType("int");
 
                     b.Property<decimal?>("Balance")
                         .HasPrecision(18, 4)
@@ -943,12 +1135,16 @@ namespace AppInfer.Db.Sql.Ef.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ApplicationUserId")
+                        .IsUnique();
+
                     b.ToTable("Customers");
 
                     b.HasData(
                         new
                         {
                             Id = 4,
+                            ApplicationUserId = 4,
                             CreatAt = new DateTime(2024, 1, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "حسین ",
                             Gender = 1,
@@ -960,6 +1156,7 @@ namespace AppInfer.Db.Sql.Ef.Migrations
                         new
                         {
                             Id = 5,
+                            ApplicationUserId = 5,
                             CreatAt = new DateTime(2024, 1, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "سارا ",
                             Gender = 2,
@@ -977,6 +1174,9 @@ namespace AppInfer.Db.Sql.Ef.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ApplicationUserId")
+                        .HasColumnType("int");
 
                     b.Property<decimal?>("Balance")
                         .HasPrecision(18, 4)
@@ -1013,12 +1213,16 @@ namespace AppInfer.Db.Sql.Ef.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ApplicationUserId")
+                        .IsUnique();
+
                     b.ToTable("Experts");
 
                     b.HasData(
                         new
                         {
                             Id = 2,
+                            ApplicationUserId = 2,
                             Balance = 10000m,
                             CreatAt = new DateTime(2024, 1, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "جواد",
@@ -1031,6 +1235,7 @@ namespace AppInfer.Db.Sql.Ef.Migrations
                         new
                         {
                             Id = 3,
+                            ApplicationUserId = 3,
                             Balance = 10000m,
                             CreatAt = new DateTime(2024, 1, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "سعید",
@@ -1072,6 +1277,186 @@ namespace AppInfer.Db.Sql.Ef.Migrations
                     b.ToTable("ExpertSuggestion");
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Expert",
+                            NormalizedName = "EXPERT"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Customer",
+                            NormalizedName = "CUSTOMER"
+                        });
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 1
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 3,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 4,
+                            RoleId = 3
+                        },
+                        new
+                        {
+                            UserId = 5,
+                            RoleId = 3
+                        });
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
             modelBuilder.Entity("AppDomainCore.AddressEntitie.Entite.Address", b =>
                 {
                     b.HasOne("AppDomainCore.UserEntite.Entiteies.Customer", "Customer")
@@ -1111,13 +1496,13 @@ namespace AppInfer.Db.Sql.Ef.Migrations
                     b.HasOne("AppDomainCore.UserEntite.Entiteies.Customer", "Customer")
                         .WithMany("Comments")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("AppDomainCore.UserEntite.Entiteies.Expert", "Expert")
                         .WithMany("Comments")
                         .HasForeignKey("ExpertId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Customer");
@@ -1130,13 +1515,13 @@ namespace AppInfer.Db.Sql.Ef.Migrations
                     b.HasOne("AppDomainCore.CategoryServiceEntitie.Entite.CategoryService", "CategoryServices")
                         .WithMany("Requests")
                         .HasForeignKey("CategoryServiceId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AppDomainCore.UserEntite.Entiteies.Customer", "Customer")
                         .WithMany("Requests")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AppDomainCore.UserEntite.Entiteies.Expert", "Expert")
@@ -1166,10 +1551,43 @@ namespace AppInfer.Db.Sql.Ef.Migrations
                     b.HasOne("AppDomainCore.RequestEntite.Entite.Request", "Request")
                         .WithMany("Suggestions")
                         .HasForeignKey("RequestId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Request");
+                });
+
+            modelBuilder.Entity("AppDomainCore.UserEntite.Entiteies.Admin", b =>
+                {
+                    b.HasOne("AppDomainCore.UserEntite.Entiteies.ApplicationUser", "ApplicationUser")
+                        .WithOne("Admin")
+                        .HasForeignKey("AppDomainCore.UserEntite.Entiteies.Admin", "ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("AppDomainCore.UserEntite.Entiteies.Customer", b =>
+                {
+                    b.HasOne("AppDomainCore.UserEntite.Entiteies.ApplicationUser", "ApplicationUser")
+                        .WithOne("Customer")
+                        .HasForeignKey("AppDomainCore.UserEntite.Entiteies.Customer", "ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("AppDomainCore.UserEntite.Entiteies.Expert", b =>
+                {
+                    b.HasOne("AppDomainCore.UserEntite.Entiteies.ApplicationUser", "ApplicationUser")
+                        .WithOne("Expert")
+                        .HasForeignKey("AppDomainCore.UserEntite.Entiteies.Expert", "ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("CategoryServiceExpert", b =>
@@ -1202,6 +1620,57 @@ namespace AppInfer.Db.Sql.Ef.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+                {
+                    b.HasOne("AppDomainCore.UserEntite.Entiteies.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+                {
+                    b.HasOne("AppDomainCore.UserEntite.Entiteies.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppDomainCore.UserEntite.Entiteies.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+                {
+                    b.HasOne("AppDomainCore.UserEntite.Entiteies.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("AppDomainCore.CategoryEntitie.Entite.Category", b =>
                 {
                     b.Navigation("SubCategories");
@@ -1225,6 +1694,15 @@ namespace AppInfer.Db.Sql.Ef.Migrations
             modelBuilder.Entity("AppDomainCore.SubCategoryEntite.Entite.SubCategory", b =>
                 {
                     b.Navigation("CategoryServices");
+                });
+
+            modelBuilder.Entity("AppDomainCore.UserEntite.Entiteies.ApplicationUser", b =>
+                {
+                    b.Navigation("Admin");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Expert");
                 });
 
             modelBuilder.Entity("AppDomainCore.UserEntite.Entiteies.Customer", b =>

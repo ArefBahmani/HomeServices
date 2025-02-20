@@ -1,4 +1,5 @@
-﻿using AppDomainCore.UserEntite.Entiteies;
+﻿using AppDomainCore.UserEntite.Dtos.AdminDtos;
+using AppDomainCore.UserEntite.Entiteies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,9 @@ namespace AppDomainCore.UserEntite.Data
 {
     public interface IAdminRepository
     {
-        public Task<bool> Add(Admin admin, CancellationToken cancellation);
+        public Task<bool> Add(AdminCreateDto admin, CancellationToken cancellation);
         public Task<bool> Delete(int adminId, CancellationToken cancellation);
-        public Task<bool> Edit(int adminId, Admin admin, CancellationToken cancellation);
+        public Task<bool> Edit(int adminId, AdminUpdateDto admin, CancellationToken cancellation);
         public Task<Admin> GetById(int adminId, CancellationToken cancellation);
         public Task<List<Admin>> GetAll(CancellationToken cancellation);
     }

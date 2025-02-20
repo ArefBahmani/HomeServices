@@ -1,4 +1,5 @@
 ﻿using AppDomainCore.RequestEntite.Data;
+using AppDomainCore.RequestEntite.Dtos;
 using AppDomainCore.RequestEntite.Entite;
 using AppDomainCore.RequestEntite.Enums;
 using AppInfer.Db.Sql.Ef.Dbase;
@@ -20,7 +21,7 @@ namespace AppInfer.Data.Repo.Ef.RequestEntite
         }
         public async Task<bool> ChangeStatus(StatusEnum status, int requestId, CancellationToken cancellationToken)
         {
-            var req = await _context.Requests.FirstOrDefaultAsync(x=>x.Id == requestId,cancellationToken);
+            var req = await _context.Requests.FirstOrDefaultAsync(x => x.Id == requestId, cancellationToken);
             if (req == null)
             {
                 return false;
@@ -30,32 +31,33 @@ namespace AppInfer.Data.Repo.Ef.RequestEntite
             return true;
         }
 
-        public async Task<bool> Create(Request request, CancellationToken cancellationToken)
+        
+
+        public async Task<bool> Create(RequestCreateDto request, CancellationToken cancellationToken)
         {
             var req = new Request()
             {
                 CategoryServiceId = request.CategoryServiceId,
                 CustomerId = request.CustomerId,
                 DateRequest = DateTime.Now,
-                ExpertId = request.ExpertId,
-                Location = request.Location,
                 Description = request.Description,
                 Status = StatusEnum.WaitingForExperts,
-                Titel = request.Titel,
-       
+                Titel = request.Title
+
             };
             if (req == null)
             {
                 return false;
             }
-            await _context.AddAsync(req);
+            await _context.AddAsync(req, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
+
             return true;
         }
 
         public async Task<bool> Delete(int requestId, CancellationToken cancellationToken)
         {
-          var model = await _context.Requests.FirstOrDefaultAsync(x=> x.Id == requestId,cancellationToken);
+            var model = await _context.Requests.FirstOrDefaultAsync(x => x.Id == requestId, cancellationToken);
             if (model == null)
             {
                 return false;
@@ -67,21 +69,23 @@ namespace AppInfer.Data.Repo.Ef.RequestEntite
 
         public async Task<List<Request>> GetAll(CancellationToken cancellationToken)
         {
-           var models = await _context.Requests.AsNoTracking().ToListAsync(cancellationToken);
+            var models = await _context.Requests.AsNoTracking().ToListAsync(cancellationToken);
             return models;
         }
 
         public async Task<Request> GetById(int id, CancellationToken cancellationToken)
         {
-           var model = await _context.Requests.AsNoTracking().FirstOrDefaultAsync(x=> x.Id == id,cancellationToken);
+            var model = await _context.Requests.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
             return model;
         }
 
-     
 
-        public async Task<bool> Update(int requestId, Request request, CancellationToken cancellationToken)
+
+       
+
+        public async Task<bool> Update(int requestId, RequestUpdateDto request, CancellationToken cancellationToken)
         {
-            var model = await _context.Requests.FirstOrDefaultAsync(x=> x.Id == requestId,cancellationToken);
+            var model = await _context.Requests.FirstOrDefaultAsync(x => x.Id == requestId, cancellationToken);
             if (model == null)
             {
                 return false;
@@ -89,16 +93,21 @@ namespace AppInfer.Data.Repo.Ef.RequestEntite
             model = new Request()
             {
                 CategoryServiceId = request.CategoryServiceId,
-                CustomerId = request.CustomerId,
+                Status = request.Status,
                 DateRequest = DateTime.Now,
                 ExpertId = request.ExpertId,
-                Location = request.Location,
                 Description = request.Description,
-                Status = request.Status,
-                Titel = request.Titel,
+                Titel = request.Title,
+                Location = request.Location
+
             };
             await _context.SaveChangesAsync(cancellationToken);
             return true;
+        }
+
+        Task<GetRequestDto> IRequestRepository.GetById(int id, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
     }
 }

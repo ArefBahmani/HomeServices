@@ -8,14 +8,10 @@
 
   <ItemGroup>
     <Folder Include="AddressEntite\" />
-    <Folder Include="CategoryEntite\" />
-    <Folder Include="CategoryServiceEntite\" />
-    <Folder Include="CommentEntite\" />
-    <Folder Include="SuggestionEntite\" />
-    <Folder Include="ProvinceEntite\" />
-    <Folder Include="RequestEntite\" />
-    <Folder Include="SubCategoryEntite\" />
-    <Folder Include="UserEntite\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -18,6 +18,7 @@ namespace AppDomainCore.CategoryServiceEntitie.Entite
         [MaxLength(500, ErrorMessage = "تعداد کارکترها بیش از حد مجاز است")]
         [MinLength(10, ErrorMessage = "تعداد کارکترها کمتر از حد مجاز است")]
         public string? Description { get; set; }
+        public string? Image { get; set; }
         public decimal BidPrice { get; set; }
         public string? Titel { get; set; }
         public SubCategory? SubCategory { get; set; }

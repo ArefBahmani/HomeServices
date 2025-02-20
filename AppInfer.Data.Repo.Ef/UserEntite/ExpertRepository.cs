@@ -1,4 +1,5 @@
 ﻿using AppDomainCore.UserEntite.Data;
+using AppDomainCore.UserEntite.Dtos.ExpertDtos;
 using AppDomainCore.UserEntite.Entiteies;
 using AppInfer.Db.Sql.Ef.Dbase;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,9 @@ namespace AppInfer.Data.Repo.Ef.UserEntite
         {
             _context = appDbContext;
         }
-        public async Task<bool> Add(Expert expert, CancellationToken cancellation)
+        
+
+        public async Task<bool> Add(ExpertCreateDto expert, CancellationToken cancellation)
         {
             var model = new Expert()
             {
@@ -30,6 +33,7 @@ namespace AppInfer.Data.Repo.Ef.UserEntite
             }
             await _context.AddAsync(model, cancellation);
             await _context.SaveChangesAsync(cancellation);
+            
             return true;
         }
 
@@ -45,24 +49,26 @@ namespace AppInfer.Data.Repo.Ef.UserEntite
             return true;
         }
 
-        public async Task<bool> Edit(int expertId, Expert expert, CancellationToken cancellation)
+        
+
+        public async Task<bool> Edit(int expertId, ExpertUpdateDto expert, CancellationToken cancellation)
         {
-            var model = await _context.Experts.FirstOrDefaultAsync(x=>x.Id == expertId,cancellation);
+            var model = await _context.Experts.FirstOrDefaultAsync(x => x.Id == expertId, cancellation);
             if (model == null)
             {
                 return false;
             }
             model = new Expert()
             {
-                ImageProfile = expert.ImageProfile,
-                Address = expert.Address,
+                ImageProfile = expert.ProfileImage,
+                
                 Balance = expert.Balance,
                 FirstName = expert.FirstName,
                 LastName = expert.LastName,
                 Gender = expert.Gender,
                 UpdateAt = DateTime.Now,
             };
-            await _context.AddAsync(model,cancellation);
+            await _context.AddAsync(model, cancellation);
             await _context.SaveChangesAsync(cancellation);
             return true;
         }

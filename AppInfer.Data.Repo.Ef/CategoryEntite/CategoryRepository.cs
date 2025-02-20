@@ -1,4 +1,5 @@
 ﻿using AppDomainCore.CategoryEntitie.Data;
+using AppDomainCore.CategoryEntitie.Dtos;
 using AppDomainCore.CategoryEntitie.Entite;
 using AppInfer.Db.Sql.Ef.Dbase;
 using Microsoft.EntityFrameworkCore;
@@ -17,24 +18,26 @@ namespace AppInfer.Data.Repo.Ef.CategoryEntite
         {
             _context = appDbContext;
         }
-        public async Task<bool> Creat(Category category, CancellationToken cancellationToken)
+       
+
+        public async Task<bool> Creat(CategoryCreateDto category, CancellationToken cancellationToken)
         {
             var newModel = new Category()
             {
                 CreateDate = DateTime.Now,
                 Image = category.Image,
                 Name = category.Name,
-                IsDeleted  = false,
+                IsDeleted = false,
 
             };
-            if(newModel == null )
+            if (newModel == null)
             {
                 return false;
             }
             await _context.Categories.AddAsync(newModel);
             await _context.SaveChangesAsync(cancellationToken);
+          
             return true;
-
         }
 
         public async Task<bool> Delete(int categoryId, CancellationToken cancellationToken)
@@ -78,5 +81,25 @@ namespace AppInfer.Data.Repo.Ef.CategoryEntite
             await _context.SaveChangesAsync(cancellationToken);
             return true;
         }
+
+        public async Task<bool> Update(int id, CategoryUpdateDto category, CancellationToken cancellationToken)
+        {
+            var model = await _context.Categories.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            model = new Category()
+            {
+                CreateDate = DateTime.Now,
+                Image = category.Image,
+                IsDeleted = false,
+                Name = category.Name,
+            };
+            if (model == null)
+            {
+                return false;
+            }
+            await _context.SaveChangesAsync(cancellationToken);
+            return true;
+        }
+
+       
     }
 }

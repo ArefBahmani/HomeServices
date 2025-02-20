@@ -1,4 +1,5 @@
 ﻿using AppDomainCore.SubCategoryEntite.Data;
+using AppDomainCore.SubCategoryEntite.Dtos;
 using AppDomainCore.SubCategoryEntite.Entite;
 using AppInfer.Db.Sql.Ef.Dbase;
 using Microsoft.EntityFrameworkCore;
@@ -17,20 +18,23 @@ namespace AppInfer.Data.Repo.Ef.SubCategoryEntite
         {
             _context = appDbContext;
         }
-        public async Task<bool> Creat(SubCategory subCategory, CancellationToken cancellationToken)
+        
+
+        public async Task<bool> Creat(CreateSubCategoryDto subCategory, CancellationToken cancellationToken)
         {
-            var model =new SubCategory()
+            var model = new SubCategory()
             {
                 Image = subCategory.Image,
                 Name = subCategory.Name,
-                
+
             };
             if (model == null)
             {
                 return false;
             }
-            await _context.AddAsync(model);
+            await _context.AddAsync(model,cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
+            
             return true;
         }
 
@@ -59,23 +63,30 @@ namespace AppInfer.Data.Repo.Ef.SubCategoryEntite
             return model;
         }
 
-        public async Task<bool> Update(int id, SubCategory subCategory, CancellationToken cancellationToken)
+        
+
+        public async Task<bool> Update(int id, UpdateSubCategoryDto subCategory, CancellationToken cancellationToken)
         {
-            var model = await _context.SubCategories.FirstOrDefaultAsync(x=> x.Id == id,cancellationToken);
+            var model = await _context.SubCategories.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
             if (model == null)
             {
                 return false;
             }
             model = new SubCategory()
             {
-                Name = subCategory.Name,
+                Name = model.Name,
                 Image = subCategory.Image,
                 UpdateAt = DateTime.Now,
 
             };
-           
+
             await _context.SaveChangesAsync(cancellationToken);
             return true;
+        }
+
+        Task<GetSubCategoryDto> ISubCategoryRepository.GetById(int id, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
     }
 }

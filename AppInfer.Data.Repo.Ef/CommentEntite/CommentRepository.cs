@@ -1,4 +1,5 @@
 ﻿using AppDomainCore.CommentEntite.Data;
+using AppDomainCore.CommentEntite.Dtos;
 using AppDomainCore.CommentEntite.Entite;
 using AppInfer.Db.Sql.Ef.Dbase;
 using Microsoft.EntityFrameworkCore;
@@ -17,12 +18,15 @@ namespace AppInfer.Data.Repo.Ef.CommentEntite
         {
             _context = appDbContext;
         }
-        public async Task<bool> Creat(Comment comment, CancellationToken cancellationToken)
+        
+
+        public async Task<bool> Creat(CommentCreateDto comment, CancellationToken cancellationToken)
         {
             var model = new Comment()
             {
                 Reaction = comment.Reaction,
-                Titel = comment.Titel,
+                Titel = comment.Title,
+                Description = comment.Description,
                 SaveTime = DateTime.Now,
 
             };
@@ -30,8 +34,9 @@ namespace AppInfer.Data.Repo.Ef.CommentEntite
             {
                 return false;
             }
-            await _context.Comments.AddAsync(model);
-           await _context.SaveChangesAsync(cancellationToken);
+            await _context.Comments.AddAsync(model,cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
+         
             return true;
         }
 
@@ -78,9 +83,11 @@ namespace AppInfer.Data.Repo.Ef.CommentEntite
             
         }
 
-        public async Task<bool> Update(int id, Comment comment, CancellationToken cancellationToken)
+       
+
+        public async Task<bool> Update(int id, CommentUpdateDto comment, CancellationToken cancellationToken)
         {
-           var model = await _context.Comments.FirstOrDefaultAsync(x=> x.Id == id,cancellationToken);
+            var model = await _context.Comments.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
             if (model == null)
             {
                 return false;
@@ -88,6 +95,7 @@ namespace AppInfer.Data.Repo.Ef.CommentEntite
             model = new Comment()
             {
                 Reaction = comment.Reaction,
+                Description = comment.Description,
                 SaveTime = DateTime.Now,
                 Titel = comment.Titel,
 

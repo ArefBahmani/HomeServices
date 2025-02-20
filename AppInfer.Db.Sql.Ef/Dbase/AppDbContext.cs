@@ -16,21 +16,28 @@ using AppInfer.Db.Sql.Ef.Configs.RequestEntite;
 using AppInfer.Db.Sql.Ef.Configs.SubCategoryEntite;
 using AppInfer.Db.Sql.Ef.Configs.SuggestionEntite;
 using AppInfer.Db.Sql.Ef.Configs.UserEntite;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace AppInfer.Db.Sql.Ef.Dbase
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
     {
         public AppDbContext(DbContextOptions<AppDbContext> dbContext) : base(dbContext)
         {
 
         }
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-J6I42F2\SQLEXPRESS;Initial Catalog=HomeService;User ID=SA;Password=123456;TrustServerCertificate=True;");
-        //    base.OnConfiguring(optionsBuilder);
-        //}
+
+
+        //        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //        {
+        //            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-J6I42F2\SQLEXPRESS;Initial Catalog=HomeService;User ID=SA;Password=123456;TrustServerCertificate=True;");
+        //            base.OnConfiguring(optionsBuilder);
+        //            optionsBuilder.ConfigureWarnings(warnings =>
+        //warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
+        //        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new AddressConfigs());
@@ -44,6 +51,7 @@ namespace AppInfer.Db.Sql.Ef.Dbase
             modelBuilder.ApplyConfiguration(new SubCategoryConfigs());
             modelBuilder.ApplyConfiguration(new CategoryServiceConfigs());
             modelBuilder.ApplyConfiguration(new SuggestionConfigs());
+            UserConfiguration.SeedUsers(modelBuilder);
             base.OnModelCreating(modelBuilder);
         }
         public DbSet<Customer> Customers { get; set; }
@@ -57,7 +65,7 @@ namespace AppInfer.Db.Sql.Ef.Dbase
         public DbSet<CategoryService> CategoryServices { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Suggestion> Suggestions { get; set; }
-        
+
 
     }
 }

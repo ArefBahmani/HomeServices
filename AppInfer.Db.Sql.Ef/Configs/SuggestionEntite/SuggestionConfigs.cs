@@ -15,7 +15,7 @@ namespace AppInfer.Db.Sql.Ef.Configs.SuggestionEntite
         {
             builder.HasKey(x => x.Id);
             builder.HasOne(r => r.Request)
-                .WithMany(s => s.Suggestions).HasForeignKey(x=>x.RequestId).OnDelete(DeleteBehavior.NoAction);
+                .WithMany(s => s.Suggestions).HasForeignKey(x=>x.RequestId).OnDelete(DeleteBehavior.Restrict);
 
             builder.HasMany(e => e.Experts)
                 .WithMany(s => s.Suggestions);

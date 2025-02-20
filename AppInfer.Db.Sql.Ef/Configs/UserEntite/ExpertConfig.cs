@@ -34,6 +34,7 @@ namespace AppInfer.Db.Sql.Ef.Configs.UserEntite
                 CreatAt = new DateTime(2024, 1, 1, 12, 0, 0),
                 Balance = 10000,
                 Gender = GenderEnum.Man,
+                ApplicationUserId = 2
                 
             },
             new Expert
@@ -44,7 +45,8 @@ namespace AppInfer.Db.Sql.Ef.Configs.UserEntite
                 PhoneNumber = "+981247877652",
                 CreatAt = new DateTime(2024, 1, 1, 12, 0, 0),
                 Balance = 10000,
-                Gender = GenderEnum.Man
+                Gender = GenderEnum.Man,
+                ApplicationUserId = 3
             });
 
         }

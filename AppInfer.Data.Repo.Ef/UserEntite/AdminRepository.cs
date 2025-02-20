@@ -1,4 +1,5 @@
 ﻿using AppDomainCore.UserEntite.Data;
+using AppDomainCore.UserEntite.Dtos.AdminDtos;
 using AppDomainCore.UserEntite.Entiteies;
 using AppInfer.Db.Sql.Ef.Dbase;
 using Microsoft.EntityFrameworkCore;
@@ -17,21 +18,23 @@ namespace AppInfer.Data.Repo.Ef.UserEntite
         {
             _context = appDbContext;
         }
-        public async Task<bool> Add(Admin admin, CancellationToken cancellation)
+        
+
+        public async Task<bool> Add(AdminCreateDto admin, CancellationToken cancellation)
         {
             var model = new Admin()
             {
                
-                FirstName = admin.FirstName,
-                LastName = admin.LastName,
+                PhoneNumber = admin.PhoneNumber,
                 Gender = admin.Gender,
             };
             if (model == null)
             {
                 return false;
             }
-            await _context.AddAsync(model);
+            await _context.AddAsync(model,cancellation);
             await _context.SaveChangesAsync(cancellation);
+           
             return true;
         }
 
@@ -47,16 +50,18 @@ namespace AppInfer.Data.Repo.Ef.UserEntite
             return true;
         }
 
-        public async Task<bool> Edit(int adminId, Admin admin, CancellationToken cancellation)
+        
+
+        public async Task<bool> Edit(int adminId, AdminUpdateDto admin, CancellationToken cancellation)
         {
-            var model = await _context.Admin.FirstOrDefaultAsync(x=>x.Id==adminId,cancellation);
+            var model = await _context.Admin.FirstOrDefaultAsync(x => x.Id == adminId, cancellation);
             if (model == null)
             {
                 return false;
             }
             model = new Admin()
             {
-                Balance = admin.Balance,
+               
                 FirstName = admin.FirstName,
                 LastName = admin.LastName,
                 Gender = admin.Gender,

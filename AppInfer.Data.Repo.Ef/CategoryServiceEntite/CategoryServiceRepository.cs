@@ -1,4 +1,5 @@
 ﻿using AppDomainCore.CategoryServiceEntitie.Data;
+using AppDomainCore.CategoryServiceEntitie.Dtos;
 using AppDomainCore.CategoryServiceEntitie.Entite;
 using AppInfer.Db.Sql.Ef.Dbase;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AppInfer.Data.Repo.Ef.CategoryServiceEntite
 {
-    public class CategoryServiceRepository : ICategoryService
+    public class CategoryServiceRepository : ICategoryServiceRepository
     {
         private readonly AppDbContext _context;
         public CategoryServiceRepository(AppDbContext appDbContext)
@@ -34,6 +35,8 @@ namespace AppInfer.Data.Repo.Ef.CategoryServiceEntite
             await _context.CategoryServices.AddAsync(model);
             return true;
         }
+
+       
 
         public async Task<bool> Delete(int id, CancellationToken cancellationToken)
         {
@@ -67,6 +70,8 @@ namespace AppInfer.Data.Repo.Ef.CategoryServiceEntite
             return true;
         }
 
+       
+
         public async Task<List<CategoryService>> GetAll(CancellationToken cancellationToken)
         {
            var models = await _context.CategoryServices.AsNoTracking().ToListAsync(cancellationToken);
@@ -77,6 +82,11 @@ namespace AppInfer.Data.Repo.Ef.CategoryServiceEntite
         {
            var model = await _context.CategoryServices.AsNoTracking().FirstOrDefaultAsync(x=>x.Id==id,cancellationToken);
             return model;
+        }
+
+        Task<GetCategoryServiceDto> ICategoryServiceRepository.GetById(int id, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
     }
 }

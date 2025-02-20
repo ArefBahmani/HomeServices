@@ -1,5 +1,6 @@
 ﻿using AppDomainCore.RequestEntite.Enums;
 using AppDomainCore.SuggestionEntite.Date;
+using AppDomainCore.SuggestionEntite.Dtos;
 using AppDomainCore.SuggestionEntite.Entite;
 using AppInfer.Db.Sql.Ef.Dbase;
 using Microsoft.EntityFrameworkCore;
@@ -18,24 +19,27 @@ namespace AppInfer.Data.Repo.Ef.SuggestionEntite
         {
             _context = appDbContext;
         }
-        public async Task<bool> Create(Suggestion suggestion, CancellationToken cancellationToken)
+       
+
+        public async Task<bool> Create(CeateSuggestionDto suggestion, CancellationToken cancellationToken)
         {
             var model = new Suggestion()
             {
                 IsDeleted = false,
                 CreatAt = DateTime.Now,
-                Status = suggestion.Status,
+                Status = StatusEnum.WatingForCustomer,
                 Description = suggestion.Description,
                 Price = suggestion.Price,
-                SuggestionDate = suggestion.SuggestionDate
+                SuggestionDate = suggestion.SuggastionDate
 
             };
             if (model == null)
             {
                 return false;
             }
-            await _context.AddAsync(model);
+            await _context.AddAsync(model,cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
+           
             return true;
         }
 
@@ -67,7 +71,9 @@ namespace AppInfer.Data.Repo.Ef.SuggestionEntite
             return model;
         }
 
-        public async Task<bool> Update(int suggestionId, Suggestion suggestion, CancellationToken cancellationToken)
+        
+
+        public async Task<bool> Update(int suggestionId, UpdateSuggestionDto suggestion, CancellationToken cancellationToken)
         {
             var model = await _context.Suggestions.FirstOrDefaultAsync(x => x.Id == suggestionId, cancellationToken);
             if (model == null)
