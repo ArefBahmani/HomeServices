@@ -1,0 +1,231 @@
+﻿@using AppDomainCore.CategoryServiceEntitie.Entite
+@using AppDomainCore.SubCategoryEntite.AppService
+
+@model CategoryService
+
+
+<section>
+    <div class="col-lg-12">
+        <div class="portlet box shadow">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h3 class="title">سرویس ها‌</h3>
+                </div>
+            </div>
+            <form enctype="multipart/form-data" asp-area="Admin" asp-Controller="CategoryService" asp-action="Create" id="simple-form" role="form" method="post">
+                <div class="form-body">
+                    <!-- نام زیرشاخه -->
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input asp-for="Name" class="form-control" type="text" placeholder="نام">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input asp-for="Titel" class="form-control" type="text" placeholder="موضوع">
+                            <span asp-validation-for="Titel" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input asp-for="Description" class="form-control" type="text" placeholder="توضیحات">
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input asp-for="BidPrice" class="form-control" type="number" placeholder=" مبلغ پیشنهادی سایت">
+                            <span asp-validation-for="BidPrice" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- انتخاب دسته‌بندی -->
+                    <div class="form-group">
+                        <div class="input-group">
+                            <select class="form-control" asp-for="SubCategoryId">
+                                <!-- استفاده از asp-for برای مدل بایندینگ -->
+                                <option value="" disabled selected>لطفاً یک دسته‌بندی انتخاب کنید</option>
+                                @foreach (var category in ViewBag.Categories)
+                                {
+                                    <option value="@category.Id">@category.Name</option>  <!-- استفاده از Id و Name صحیح -->
+                                }
+                            </select>
+                            <span asp-validation-for="SubCategoryId" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+                    <!-- شناسه دسته‌بندی -->
+                   @*  <div class="form-group">
+                        <div class="input-group">
+                            <input asp-for="CategoryId" class="form-control" type="number" placeholder="شناسه دسته‌بندی" readonly>
+                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        </div>
+                    </div> *@
+
+                    <!-- آپلود عکس -->
+                    <div class="form-group relative">
+                        <input asp-for="ProfileImgFile" type="file" class="form-control">
+                        <label>آپلود عکس</label>
+                        <div class="input-group round">
+                            <input type="text" class="form-control file-input" placeholder="برای آپلود کلیک کنید">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-success">
+                                    <i class="icon-picture"></i>
+                                    آپلود عکس
+                                </button>
+                            </span>
+                        </div>
+                        <span asp-validation-for="ProfileImgFile" class="text-danger"></span>
+                    </div>
+                </div>
+                <hr>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-success">
+                        <i class="icon-check"></i> ذخیره
+                    </button>
+                    <a asp-action="Index" class="btn btn-warning">بازگشت</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+
+
+    <script>
+        // زمانی که انتخاب تغییر کرد
+        document.getElementById("SubcategorySelect").addEventListener("change", function() {
+            // گرفتن شناسه انتخاب شده
+            var SubCategoryId = this.value;
+            // قرار دادن شناسه در فیلد SubcategoryIdInput
+            document.getElementById("SubcategoryIdInput").value = SubcategoryId;
+        });
+    </script>
+</section>
+
+
+    <style>
+        body {
+            font-family: 'Tahoma', sans-serif;
+            direction: rtl;
+            text-align: right;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 400px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .category-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+            .category-list li {
+                background: #f1f1f1;
+                padding: 10px;
+                margin: 5px 0;
+                border-radius: 5px;
+                transition: 0.3s;
+                cursor: pointer;
+                text-align: center;
+                font-size: 14px;
+                font-weight: bold;
+            }
+
+                .category-list li:hover {
+                    background: #ddd;
+                }
+
+                .category-list li.selected {
+                    background: #28a745;
+                    color: white;
+                    font-weight: bold;
+                }
+
+        /* استایل دکمه‌ها */
+        .form-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+            color: black;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .btn:active::after {
+            content: "";
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.2);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            animation: ripple 0.5s ease-out;
+        }
+
+        .keyframes ripple {
+            0%
+
+        {
+            width: 0;
+            height: 0;
+            opacity: 0.5;
+        }
+
+        100% {
+            width: 200%;
+            height: 200%;
+            opacity: 0;
+        }
+
+        }
+    </style>
+
+
+
+
+</section>
+
+
+

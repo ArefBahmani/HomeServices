@@ -1,6 +1,7 @@
 ﻿using AppDomainCore.AddressEntitie.Entite;
 using AppDomainCore.CategoryServiceEntitie.Entite;
 using AppDomainCore.UserEntite.Enums;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,6 +21,7 @@ namespace AppDomainCore.UserEntite.Dtos.ExpertDtos
         public GenderEnum? Gender { get; set; }
         [DisplayName("شماره تلفن")]
         public string PhoneNumber { get; set; }
+        public string Image { get; set; }
         [DisplayName("تاریخ تولد")]
         public DateTime? BirthDate { get; set; }
         [DisplayName("عکس پروفایل")]
@@ -29,5 +31,6 @@ namespace AppDomainCore.UserEntite.Dtos.ExpertDtos
         public List<CategoryService> CategoryServices { get; set; }
         [DisplayName("آدرس")]
         public Address Address { get; set; }
+        public IFormFile? ProfileImgFile { get; set; }
     }
 }

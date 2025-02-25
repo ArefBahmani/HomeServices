@@ -16,15 +16,14 @@ namespace AppDomain.AppService.CategoryEntite
     {
         private readonly IBaseService _baseSevices;
         private readonly ICategoryService _categoryService;
-        public CategoryAppService(/*IBaseService baseService,*/ ICategoryService categoryService)
+        public CategoryAppService(IBaseService baseService, ICategoryService categoryService)
         {
-            //_baseSevices = baseService;
+            _baseSevices = baseService;
             _categoryService = categoryService; 
         }
-        public async Task<bool> Create(CategoryCreateDto serviceCategoryCreateDto,/* IFormFile image,*/ CancellationToken cancellationToken)
+        public async Task<bool> Create(CategoryCreateDto serviceCategoryCreateDto, CancellationToken cancellationToken)
         {
-            //var imageAddress = _baseSevices.UploadImage(image);
-            //serviceCategoryCreateDto.Image = await imageAddress;
+            serviceCategoryCreateDto.Image = await _baseSevices.UploadImage("Category", serviceCategoryCreateDto.ProfileImgFile!,cancellationToken);
             return await _categoryService.Creat(serviceCategoryCreateDto, cancellationToken);
         }
 
@@ -43,13 +42,9 @@ namespace AppDomain.AppService.CategoryEntite
             return await _categoryService.GetCategory(serviceCategoryId, cancellationToken);
         }
 
-        public async Task<bool> Update(int id, CategoryUpdateDto category, /*IFormFile image,*/ CancellationToken cancellationToken)
+        public async Task<bool> Update(int id, CategoryUpdateDto category, CancellationToken cancellationToken)
         {
-            //if (image != null)
-            //{
-            //    var imageAddress = _baseSevices.UploadImage(image);
-            //    category.Image = await imageAddress;
-            //}
+            category.Image = await _baseSevices.UploadImage("Category",category.ProfileImgFile!,cancellationToken);
             return await _categoryService.Update(id,category,cancellationToken);
         }
     }

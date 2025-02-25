@@ -45,9 +45,9 @@ namespace AppDomain.AppService.BaseEntity
             return (List<IdentityError>)result.Errors;
         }
 
-        public async Task<bool> Login(AccountLoginDto accountLoginDto)
+        public async Task<bool> Login(string Email,string password, CancellationToken cancellationToken)
         {
-            var result = await _signInManager.PasswordSignInAsync(accountLoginDto.Email, accountLoginDto.Password, false, lockoutOnFailure: false);
+            var result = await _signInManager.PasswordSignInAsync(Email, password, false, lockoutOnFailure: false);
             return result.Succeeded;
         }
 

@@ -1,4 +1,6 @@
-﻿using AppDomainCore.RequestEntite.AppService;
+﻿using AppDomainCore.BaseEntity.Service;
+using AppDomainCore.CategoryServiceEntitie.Entite;
+using AppDomainCore.RequestEntite.AppService;
 using AppDomainCore.RequestEntite.Dtos;
 using AppDomainCore.RequestEntite.Entite;
 using AppDomainCore.RequestEntite.Enums;
@@ -13,10 +15,12 @@ namespace AppDomain.AppService.RequestEntite
 {
     public class RequestAppService : IRequestAppService
     {
+        private readonly IBaseService _baseSevices;
         private readonly IRequestService _requestService;
-        public RequestAppService(IRequestService requestService)
+        public RequestAppService(IRequestService requestService, IBaseService baseService)
         {
             _requestService = requestService;
+            _baseSevices = baseService;
         }
         public async Task<bool> ChangeStatus(StatusEnum status, int requestId, CancellationToken cancellationToken)
         {
@@ -25,7 +29,8 @@ namespace AppDomain.AppService.RequestEntite
 
         public async Task<bool> Create(RequestCreateDto request, CancellationToken cancellationToken)
         {
-           return await _requestService.Create(request, cancellationToken);
+            request.Image = await _baseSevices.UploadImage("Request", request.ProfileImgFile!, cancellationToken);
+            return await _requestService.Create(request, cancellationToken);
         }
 
         public async Task<bool> Delete(int requestId, CancellationToken cancellationToken)
@@ -45,6 +50,7 @@ namespace AppDomain.AppService.RequestEntite
 
         public async Task<bool> Update(int requestId, RequestUpdateDto request, CancellationToken cancellationToken)
         {
+            request.Image = await _baseSevices.UploadImage("Request", request.ProfileImgFile!, cancellationToken);
             return await _requestService.Update(requestId, request, cancellationToken); 
         }
     }

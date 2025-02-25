@@ -1,6 +1,7 @@
 ﻿using AppDomainCore.CategoryEntitie.Data;
 using AppDomainCore.CategoryEntitie.Dtos;
 using AppDomainCore.CategoryEntitie.Entite;
+using AppDomainCore.CategoryServiceEntitie.Dtos;
 using AppInfer.Db.Sql.Ef.Dbase;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -54,42 +55,41 @@ namespace AppInfer.Data.Repo.Ef.CategoryEntite
 
         public async Task<List<Category>> GetAllCategories(CancellationToken cancellationToken)
         {
-           var models = await _context.Categories.AsNoTracking().ToListAsync(cancellationToken);
+           var models = await _context.Categories.Where(x => x.IsDeleted == false).AsNoTracking().ToListAsync(cancellationToken);
             return models;
         }
 
         public async Task<Category> GetCategory(int categoryId, CancellationToken cancellationToken)
         {
-           var model = await _context.Categories.AsNoTracking().FirstOrDefaultAsync(x=>x.Id==categoryId,cancellationToken);
+           var model = await _context.Categories.Where(x=>x.IsDeleted==false).AsNoTracking().FirstOrDefaultAsync(x=>x.Id==categoryId,cancellationToken);
             return model;
         }
 
         public async Task<bool> Update(int id, Category category, CancellationToken cancellationToken)
         {
-           var model = await _context.Categories.FirstOrDefaultAsync(x => x.Id==id,cancellationToken);
+           var model = await _context.Categories.Where(x=>x.IsDeleted==false).FirstOrDefaultAsync(x => x.Id==id,cancellationToken);
             model = new Category()
             {
                 CreateDate = DateTime.Now,
-                Image = category.Image,
-                IsDeleted = false,
+                Image = category.Image,              
                 Name = category.Name,
             };
             if (model == null)
             {
                 return false;
             }
+      
             await _context.SaveChangesAsync(cancellationToken);
             return true;
         }
 
         public async Task<bool> Update(int id, CategoryUpdateDto category, CancellationToken cancellationToken)
         {
-            var model = await _context.Categories.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            var model = await _context.Categories.Where(x => x.IsDeleted == false).FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
             model = new Category()
             {
                 CreateDate = DateTime.Now,
-                Image = category.Image,
-                IsDeleted = false,
+                Image = category.Image,              
                 Name = category.Name,
             };
             if (model == null)

@@ -29,15 +29,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Account\Data\" />
+    <Folder Include="Areas\Account\Models\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="wwwroot\Img\Address\" />
-    <Folder Include="wwwroot\Img\Category\" />
     <Folder Include="wwwroot\Img\CategoryService\" />
+    <Folder Include="wwwroot\Img\Category\" />
     <Folder Include="wwwroot\Img\Comment\" />
-    <Folder Include="wwwroot\Img\Admin\" />
+    <Folder Include="wwwroot\Img\Adminn\" />
     <Folder Include="wwwroot\Img\Expert\" />
     <Folder Include="wwwroot\Img\Customer\" />
+    <Folder Include="wwwroot\Img\Request\" />
     <Folder Include="wwwroot\Img\SubCategory\" />
   </ItemGroup>
 

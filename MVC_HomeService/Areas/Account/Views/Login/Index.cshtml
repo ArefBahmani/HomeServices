@@ -1,0 +1,110 @@
+﻿@using AppDomainCore.BaseEntity.Dto
+
+
+@model AccountLoginDto
+
+<section id="main" class="clearfix user-page">
+    <div class="container d-flex align-items-center justify-content-center">
+        <div class="row text-center w-100">
+            <div class="col-md-10 col-lg-8">
+                <div class="user-account">
+                    <h2>فرم ورود</h2>
+                    <form method="post">
+                        <div class="form-group">
+                            <input type="text" asp-for="" class="form-control" placeholder="نام کاربری یا ایمیل">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" asp-for="PageModel.Password" class="form-control" placeholder="رمزعبور">
+                        </div>
+                        <button type="submit" class="btn">ورود</button>
+                        <a href="#" class="forgot-password">فراموشی رمز عبور؟</a>
+                        <a href="#" class="btn-primary">ساخت اکانت جدید</a>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .user-account {
+            background-color: #333;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            color: #FFD700; /* رنگ طلایی */
+        }
+
+        .form-control {
+            border-radius: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            font-size: 16px;
+            background-color: #444;
+            color: #f5f5f5;
+            border: 1px solid #FFD700; /* حاشیه طلایی */
+        }
+
+        .btn {
+            background-color: #FFD700; /* رنگ طلایی */
+            color: #1a1a1a;
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-size: 16px;
+            text-transform: uppercase;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+            .btn:hover {
+                background-color: #FFC107; /* رنگ روشن‌تر */
+                transform: scale(1.05); /* افکت بزرگ شدن */
+            }
+
+        .btn-primary {
+            display: block;
+            margin-top: 10px;
+            color: white; /* رنگ طلایی */
+            text-decoration: underline;
+            transition: color 0.3s;
+        }
+
+            .btn-primary:hover {
+                color:forestgreen;
+                transform: scale(1.05);
+            }
+
+        .forgot-password {
+            display: block;
+            margin-top: 10px;
+            color: white; /* رنگ طلایی */
+            text-decoration: underline;
+            transition: color 0.3s;
+        }
+
+            .forgot-password:hover {
+                color: red; /* رنگ روشن‌تر */
+            }
+    </style>
+</section>

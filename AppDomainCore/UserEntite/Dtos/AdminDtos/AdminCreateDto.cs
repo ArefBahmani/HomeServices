@@ -1,4 +1,5 @@
 ﻿using AppDomainCore.UserEntite.Enums;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,5 +23,7 @@ namespace AppDomainCore.UserEntite.Dtos.AdminDtos
         public string PhoneNumber { get; set; }
         [DisplayName("جنسیت")]
         public GenderEnum Gender { get; set; }
+        public string Image { get; set; }
+        public IFormFile? ProfileImgFile { get; set; }
     }
 }

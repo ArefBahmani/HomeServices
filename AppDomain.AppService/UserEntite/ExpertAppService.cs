@@ -1,4 +1,5 @@
-﻿using AppDomainCore.UserEntite.AppService.ExpertAppService;
+﻿using AppDomainCore.BaseEntity.Service;
+using AppDomainCore.UserEntite.AppService.ExpertAppService;
 using AppDomainCore.UserEntite.Dtos.ExpertDtos;
 using AppDomainCore.UserEntite.Entiteies;
 using AppDomainCore.UserEntite.Service.ExpertService;
@@ -12,13 +13,16 @@ namespace AppDomain.AppService.UserEntite
 {
     public class ExpertAppService : IExpertAppService
     {
+        private readonly IBaseService _baseSevices;
         private readonly IExpertService _expertService;
-        public ExpertAppService(IExpertService expertService)
+        public ExpertAppService(IExpertService expertService, IBaseService baseService)
         {
             _expertService = expertService;
+            _baseSevices = baseService;
         }
         public async Task<bool> Add(ExpertCreateDto expert, CancellationToken cancellation)
         {
+            expert.Image = await _baseSevices.UploadImage("Expert", expert.ProfileImgFile!, cancellation);
             return await _expertService.Add(expert, cancellation);
         }
 

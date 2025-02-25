@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace AppDomainCore.CategoryServiceEntitie.Dtos
 {
@@ -21,5 +22,8 @@ namespace AppDomainCore.CategoryServiceEntitie.Dtos
         [Range(100000, 99000000, ErrorMessage = "قیمت نمی‌تواند کمتر از 100 هزار تومان (100000) و بیشتر از 99 میلیون تومان (99000000) باشد")]
         public decimal BidPrice { get; set; }
         public int SubCategoryId { get; set; }
+        public string Description { get; set; }
+        public IFormFile? ProfileImgFile { get; set; }
+        public string Title { get; set; }
     }
 }

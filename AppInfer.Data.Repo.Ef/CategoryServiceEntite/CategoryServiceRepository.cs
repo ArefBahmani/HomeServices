@@ -18,21 +18,24 @@ namespace AppInfer.Data.Repo.Ef.CategoryServiceEntite
         {
             _context = appDbContext;
         }
-        public async Task<bool> Creat(CategoryService categoryService, CancellationToken cancellationToken)
+        public async Task<bool> Creat(CreateCategoryService categoryService, CancellationToken cancellationToken)
         {
             var model = new CategoryService()
             {
-                BidPrice = categoryService.BidPrice,
+                BidPrice = (decimal)categoryService.BidPrice,
                 Description = categoryService.Description,
                 CreatTime = DateTime.Now,
                 Name = categoryService.Name,
-                Titel = categoryService.Titel,
+                Titel = categoryService.Title,
+                Image = categoryService.Image,
+                SubCategoryId = categoryService.SubCategoryId,
             };
             if (model == null)
             {
                 return false;
             }
             await _context.CategoryServices.AddAsync(model);
+            await _context.SaveChangesAsync(cancellationToken);
             return true;
         }
 
@@ -52,7 +55,7 @@ namespace AppInfer.Data.Repo.Ef.CategoryServiceEntite
 
         public async Task<bool> Edit(int id, CategoryService categoryService, CancellationToken cancellationToken)
         {
-            var model = await _context.CategoryServices.FirstOrDefaultAsync(x => x.Id == id,cancellationToken);
+            var model = await _context.CategoryServices.Where(x => x.IsDeleted == false).FirstOrDefaultAsync(x => x.Id == id,cancellationToken);
             if (model == null)
             {
                 return false;
@@ -63,6 +66,7 @@ namespace AppInfer.Data.Repo.Ef.CategoryServiceEntite
                 Description = categoryService.Description,
                 Name = categoryService.Name,
                 Titel = categoryService.Titel,
+                Image = categoryService.Image,
                 CreatTime = DateTime.Now,
 
             };
@@ -74,13 +78,13 @@ namespace AppInfer.Data.Repo.Ef.CategoryServiceEntite
 
         public async Task<List<CategoryService>> GetAll(CancellationToken cancellationToken)
         {
-           var models = await _context.CategoryServices.AsNoTracking().ToListAsync(cancellationToken);
+           var models = await _context.CategoryServices.Where(x => x.IsDeleted == false).AsNoTracking().ToListAsync(cancellationToken);
             return models;
         }
 
         public async Task<CategoryService> GetById(int id, CancellationToken cancellationToken)
         {
-           var model = await _context.CategoryServices.AsNoTracking().FirstOrDefaultAsync(x=>x.Id==id,cancellationToken);
+           var model = await _context.CategoryServices.Where(x => x.IsDeleted == false).AsNoTracking().FirstOrDefaultAsync(x=>x.Id==id,cancellationToken);
             return model;
         }
 

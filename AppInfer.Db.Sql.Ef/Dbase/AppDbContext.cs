@@ -1,4 +1,5 @@
 ﻿using AppDomainCore.AddressEntitie.Entite;
+using AppDomainCore.CategoryEntitie.Dtos;
 using AppDomainCore.CategoryEntitie.Entite;
 using AppDomainCore.CategoryServiceEntitie.Entite;
 using AppDomainCore.CityEntite.Entite;
@@ -27,17 +28,17 @@ namespace AppInfer.Db.Sql.Ef.Dbase
     {
         public AppDbContext(DbContextOptions<AppDbContext> dbContext) : base(dbContext)
         {
-
+            
         }
 
 
-        //        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //        {
-        //            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-J6I42F2\SQLEXPRESS;Initial Catalog=HomeService;User ID=SA;Password=123456;TrustServerCertificate=True;");
-        //            base.OnConfiguring(optionsBuilder);
-        //            optionsBuilder.ConfigureWarnings(warnings =>
-        //warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
-        //        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-J6I42F2\SQLEXPRESS;Initial Catalog=HomeService;User ID=SA;Password=123456;TrustServerCertificate=True;");
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.ConfigureWarnings(warnings =>
+warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new AddressConfigs());
@@ -52,6 +53,8 @@ namespace AppInfer.Db.Sql.Ef.Dbase
             modelBuilder.ApplyConfiguration(new CategoryServiceConfigs());
             modelBuilder.ApplyConfiguration(new SuggestionConfigs());
             UserConfiguration.SeedUsers(modelBuilder);
+          
+       
             base.OnModelCreating(modelBuilder);
         }
         public DbSet<Customer> Customers { get; set; }

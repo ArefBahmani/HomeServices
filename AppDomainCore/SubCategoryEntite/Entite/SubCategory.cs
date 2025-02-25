@@ -19,7 +19,7 @@ namespace AppDomainCore.SubCategoryEntite.Entite
         public List<CategoryService>? CategoryServices { get; set; }
         public Category? Category { get; set; }
         public int CategoryId { get; set; }
-        public bool IsDeleted { get; set; }
+        public bool IsDeleted { get; set; } = false;
         public DateTime Created { get; set; }
         public DateTime UpdateAt { get; set; }
 

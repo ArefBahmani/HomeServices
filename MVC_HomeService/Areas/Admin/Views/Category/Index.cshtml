@@ -10,14 +10,14 @@
         <div class="portlet-heading">
             <div class="portlet-title">
                 <h3 class="title">
-                    کاربران
+                    دسته بندی
                 </h3>
             </div><!-- /.portlet-title -->
         </div><!-- /.portlet-heading -->
         <div class="portlet-body">
             <div class="top-buttons-box mb-2">
                 <a class="btn btn-success" asp-area="Admin" asp-controller="Category" asp-action="create">
-                    <i class="icon-plus"></i>
+                    <i class="icon-plus" style="color:green"></i>
                     افزودن
                     <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
                 </a>
@@ -35,33 +35,33 @@
 
                             </tr>
                         </thead>
-                       @*  <tbody>
-                            @foreach (var Cat in @Model)
+                         <tbody>
+                            @foreach (var item in @Model)
                             {
                                 <tr>
                                     <td><input type="checkbox"></td>
 
-                                    <td>@Cat.Id</td>
-                                    @if (string.IsNullOrEmpty(Cat.ImagePath))
+                                    <td>@item.Id</td>
+                                    @if (string.IsNullOrEmpty(item.Image))
                                     {
                                         <td><img style="border-radius : 50%" src="~//AdminTemplate//images//user//placeholder.jpg" width="80" height="80" /></td>
                                     }
                                     else
                                     {
-                                        <td><img style="border-radius : 50%" src="@Cat.ImagePath" width="80" height="80" /></td>
+                                        <td><img style="border-radius : 50%" src="@item.Image" width="80" height="80" /></td>
                                     }
 
 
-                                    <td>@Cat.Name</td>
+                                    <td>@item.Name</td>
 
 
                                     <td>
-                                        <a asp-area="Admin" asp-controller="Category" asp-action="UpdatePage" asp-route-Id="@Cat.Id" class="btn btn-info">ویرایش</a>
-                                        <a onclick="return confirm('آیا از حذف این کاربر اطمینان دارید؟')" asp-area="Admin" asp-controller="Category" asp-action="Delete" asp-route-Id="@Cat.Id" class="btn btn-danger">حذف</a>
+                                        <a asp-area="Admin" asp-controller="Category" asp-action="Update" asp-route-Id="@item.Id" method="post" class="btn btn-info"><h3 style="color:yellow">ویرایش</h3></a>
+                                        <a onclick="return confirm('آیا از حذف این دستبندی اطمینان دارید؟')" asp-area="Admin" asp-controller="Category" asp-action="Delete" asp-route-Id="@item.Id" class="btn btn-danger"><h3 style="color:red">حذف</h3></a>
                                     </td>
                                 </tr>
                             }
-                        </tbody> *@
+                        </tbody> 
                     </table>
                 </div>
             </div>

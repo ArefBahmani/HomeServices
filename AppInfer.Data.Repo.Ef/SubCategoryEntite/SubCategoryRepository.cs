@@ -26,6 +26,8 @@ namespace AppInfer.Data.Repo.Ef.SubCategoryEntite
             {
                 Image = subCategory.Image,
                 Name = subCategory.Name,
+                CategoryId = subCategory.CategoryId,
+                Created = DateTime.Now,
 
             };
             if (model == null)
@@ -53,13 +55,13 @@ namespace AppInfer.Data.Repo.Ef.SubCategoryEntite
 
         public async Task<List<SubCategory>> GetAll(CancellationToken cancellationToken)
         {
-            var models = await _context.SubCategories.AsNoTracking().ToListAsync(cancellationToken);
+            var models = await _context.SubCategories.Where(x => x.IsDeleted == false).AsNoTracking().ToListAsync(cancellationToken);
             return models;
         }
 
         public async Task<SubCategory> GetById(int id, CancellationToken cancellationToken)
         {
-            var model = await _context.SubCategories.AsNoTracking().FirstOrDefaultAsync(x=> x.Id == id,cancellationToken);
+            var model = await _context.SubCategories.Where(x => x.IsDeleted == false).AsNoTracking().FirstOrDefaultAsync(x=> x.Id == id,cancellationToken);
             return model;
         }
 
@@ -74,6 +76,7 @@ namespace AppInfer.Data.Repo.Ef.SubCategoryEntite
             }
             model = new SubCategory()
             {
+                CategoryId = subCategory.CategoryId,
                 Name = model.Name,
                 Image = subCategory.Image,
                 UpdateAt = DateTime.Now,
@@ -84,9 +87,6 @@ namespace AppInfer.Data.Repo.Ef.SubCategoryEntite
             return true;
         }
 
-        Task<GetSubCategoryDto> ISubCategoryRepository.GetById(int id, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }

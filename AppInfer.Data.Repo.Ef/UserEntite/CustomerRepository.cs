@@ -55,7 +55,7 @@ namespace AppInfer.Data.Repo.Ef.UserEntite
 
         public async Task<bool> Edit(int CustomerId, CustomerUpdateDto customer, CancellationToken cancellation)
         {
-            var model = await _context.Customers.FirstOrDefaultAsync(x => x.Id == CustomerId, cancellation);
+            var model = await _context.Customers.Include(x => x.IsDeleted == false).FirstOrDefaultAsync(x => x.Id == CustomerId, cancellation);
             if (model == null)
             {
                 return false;
@@ -76,13 +76,13 @@ namespace AppInfer.Data.Repo.Ef.UserEntite
 
         public async Task<List<Customer>> GetAll(CancellationToken cancellation)
         {
-            var models = await _context.Customers.ToListAsync(cancellation);
+            var models = await _context.Customers.Include(x => x.IsDeleted == false).ToListAsync(cancellation);
             return models;
         }
 
         public async Task<Customer> GetById(int CustomerId, CancellationToken cancellation)
         {
-            var model = await _context.Customers.AsNoTracking().FirstOrDefaultAsync( x=> x.Id == CustomerId, cancellation);
+            var model = await _context.Customers.Include(x => x.IsDeleted == false).AsNoTracking().FirstOrDefaultAsync( x=> x.Id == CustomerId, cancellation);
             return model;
         }
     }

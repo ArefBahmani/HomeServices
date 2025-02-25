@@ -19,6 +19,7 @@ namespace AppDomain.Service.CategoryEntite
         }
         public async Task<bool> Creat(CategoryCreateDto category, CancellationToken cancellationToken)
         {
+
            return await _categoryRepository.Creat(category, cancellationToken);
         }
 

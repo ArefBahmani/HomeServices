@@ -57,13 +57,13 @@ namespace AppInfer.Data.Repo.Ef.SuggestionEntite
 
         public async Task<List<Suggestion>> GetAll(CancellationToken cancellationToken)
         {
-            var models = await _context.Suggestions.AsNoTracking().ToListAsync(cancellationToken);
+            var models = await _context.Suggestions.Include(x => x.IsDeleted == false).AsNoTracking().ToListAsync(cancellationToken);
             return models;
         }
 
         public async Task<Suggestion> GetById(int id, CancellationToken cancellationToken)
         {
-            var model = await _context.Suggestions.AsNoTracking().FirstOrDefaultAsync(x=>x.Id == id,cancellationToken);
+            var model = await _context.Suggestions.Include(x => x.IsDeleted == false).AsNoTracking().FirstOrDefaultAsync(x=>x.Id == id,cancellationToken);
             if (model == null)
             {
                 return null;
@@ -75,7 +75,7 @@ namespace AppInfer.Data.Repo.Ef.SuggestionEntite
 
         public async Task<bool> Update(int suggestionId, UpdateSuggestionDto suggestion, CancellationToken cancellationToken)
         {
-            var model = await _context.Suggestions.FirstOrDefaultAsync(x => x.Id == suggestionId, cancellationToken);
+            var model = await _context.Suggestions.Include(x => x.IsDeleted == false).FirstOrDefaultAsync(x => x.Id == suggestionId, cancellationToken);
             if (model == null)
             {
                 return false;

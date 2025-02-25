@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace AppDomainCore.SubCategoryEntite.Dtos
 {
@@ -16,6 +17,7 @@ namespace AppDomainCore.SubCategoryEntite.Dtos
         [Required(ErrorMessage = "وارد کردن نام دسته بندی اجباری است.")]
         public string Name { get; set; }
         public int CategoryId { get; set; }
+        public IFormFile? ProfileImgFile { get; set; }
         public string? Image { get; set; }
     }
 }

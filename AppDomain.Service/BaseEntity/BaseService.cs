@@ -11,32 +11,39 @@ namespace AppDomain.Service.BaseEntity
 {
     public class BaseService : IBaseService
     {
-        public async Task<string> UploadImage(IFormFile image)
+        public async Task<string> UploadImage(string folderName, IFormFile image, CancellationToken cancellationToken)
         {
-            string filePath;
-            string fileName;
-            if (image != null)
+            if (image == null || image.Length == 0)
             {
-                fileName = Guid.NewGuid().ToString() +
-                           ContentDispositionHeaderValue.Parse(image.ContentDisposition).FileName.Trim('"');
-                filePath = Path.Combine("wwwroot/uploads", fileName);
-                try
-                {
-                    using (var stream = System.IO.File.Create(filePath))
-                    {
-                        await image.CopyToAsync(stream);
-                    }
-                }
-                catch
-                {
-                    throw new Exception("Upload files operation failed");
-                }
-                return $"/uploads/{fileName}";
+                return string.Empty;
             }
-            else
-                fileName = "";
 
-            return fileName;
+            // بررسی و ایجاد مسیر ذخیره‌سازی در `wwwroot`
+            var uploadsFolder = Path.Combine("wwwroot", "Img", folderName);
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            // ایجاد نام یکتا برای فایل با پسوند اصلی
+            var fileExtension = Path.GetExtension(image.FileName);
+            var fileName = $"{Guid.NewGuid()}{fileExtension}";
+            var filePath = Path.Combine(uploadsFolder, fileName);
+
+            try
+            {
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await image.CopyToAsync(stream, cancellationToken);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("خطایی در آپلود فایل رخ داده است.", ex);
+            }
+
+            return $"/Img/{folderName}/{fileName}";
         }
+
     }
 }

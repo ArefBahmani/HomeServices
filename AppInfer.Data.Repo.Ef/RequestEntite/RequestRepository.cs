@@ -21,7 +21,7 @@ namespace AppInfer.Data.Repo.Ef.RequestEntite
         }
         public async Task<bool> ChangeStatus(StatusEnum status, int requestId, CancellationToken cancellationToken)
         {
-            var req = await _context.Requests.FirstOrDefaultAsync(x => x.Id == requestId, cancellationToken);
+            var req = await _context.Requests.Include(x => x.IsDeleted == false).FirstOrDefaultAsync(x => x.Id == requestId, cancellationToken);
             if (req == null)
             {
                 return false;
@@ -69,13 +69,13 @@ namespace AppInfer.Data.Repo.Ef.RequestEntite
 
         public async Task<List<Request>> GetAll(CancellationToken cancellationToken)
         {
-            var models = await _context.Requests.AsNoTracking().ToListAsync(cancellationToken);
+            var models = await _context.Requests.Include(x => x.IsDeleted == false).AsNoTracking().ToListAsync(cancellationToken);
             return models;
         }
 
         public async Task<Request> GetById(int id, CancellationToken cancellationToken)
         {
-            var model = await _context.Requests.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            var model = await _context.Requests.Include(x => x.IsDeleted == false).AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
             return model;
         }
 
@@ -85,7 +85,7 @@ namespace AppInfer.Data.Repo.Ef.RequestEntite
 
         public async Task<bool> Update(int requestId, RequestUpdateDto request, CancellationToken cancellationToken)
         {
-            var model = await _context.Requests.FirstOrDefaultAsync(x => x.Id == requestId, cancellationToken);
+            var model = await _context.Requests.Include(x => x.IsDeleted == false).FirstOrDefaultAsync(x => x.Id == requestId, cancellationToken);
             if (model == null)
             {
                 return false;

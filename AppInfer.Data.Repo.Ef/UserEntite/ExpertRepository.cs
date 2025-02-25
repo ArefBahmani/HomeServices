@@ -53,7 +53,7 @@ namespace AppInfer.Data.Repo.Ef.UserEntite
 
         public async Task<bool> Edit(int expertId, ExpertUpdateDto expert, CancellationToken cancellation)
         {
-            var model = await _context.Experts.FirstOrDefaultAsync(x => x.Id == expertId, cancellation);
+            var model = await _context.Experts.Include(x => x.IsDeleted == false).FirstOrDefaultAsync(x => x.Id == expertId, cancellation);
             if (model == null)
             {
                 return false;
@@ -75,13 +75,13 @@ namespace AppInfer.Data.Repo.Ef.UserEntite
 
         public async Task<List<Expert>> GetAll(CancellationToken cancellation)
         {
-            var model = await _context.Experts.AsNoTracking().ToListAsync(cancellation);
+            var model = await _context.Experts.Include(x => x.IsDeleted == false).AsNoTracking().ToListAsync(cancellation);
             return model;
         }
 
         public async Task<Expert> GetById(int expertId, CancellationToken cancellation)
         {
-           var model = await _context.Experts.AsNoTracking().FirstOrDefaultAsync(x=>x.Id==expertId,cancellation);
+           var model = await _context.Experts.Include(x => x.IsDeleted == false).AsNoTracking().FirstOrDefaultAsync(x=>x.Id==expertId,cancellation);
             return model;
         }
     }

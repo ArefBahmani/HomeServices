@@ -17,7 +17,7 @@ namespace AppDomain.Service.CategoryServiceEntite
         {
             _repository = categoryServiceRepository;
         }
-        public async Task<bool> Creat(CategoryService categoryService, CancellationToken cancellationToken)
+        public async Task<bool> Creat(CreateCategoryService categoryService, CancellationToken cancellationToken)
         {
            return await _repository.Creat(categoryService, cancellationToken);
         }

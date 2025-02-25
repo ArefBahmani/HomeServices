@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace AppDomainCore.RequestEntite.Dtos
 {
@@ -25,5 +26,6 @@ namespace AppDomainCore.RequestEntite.Dtos
         [DisplayName("عکس ها")]
         public string? Image { get; set; }
         public DateTime Date { get; set; }
+        public IFormFile? ProfileImgFile { get; set; }
     }
 }

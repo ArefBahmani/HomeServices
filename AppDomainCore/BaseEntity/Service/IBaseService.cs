@@ -9,6 +9,6 @@ namespace AppDomainCore.BaseEntity.Service
 {
     public interface IBaseService
     {
-        Task<string> UploadImage(IFormFile image);
+        Task<string> UploadImage(string folderName, IFormFile image,CancellationToken cancellationToken);
     }
 }

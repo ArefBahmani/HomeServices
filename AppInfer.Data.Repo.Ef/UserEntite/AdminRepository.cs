@@ -54,7 +54,7 @@ namespace AppInfer.Data.Repo.Ef.UserEntite
 
         public async Task<bool> Edit(int adminId, AdminUpdateDto admin, CancellationToken cancellation)
         {
-            var model = await _context.Admin.FirstOrDefaultAsync(x => x.Id == adminId, cancellation);
+            var model = await _context.Admin.Include(x => x.IsDeleted == false).FirstOrDefaultAsync(x => x.Id == adminId, cancellation);
             if (model == null)
             {
                 return false;
@@ -73,13 +73,13 @@ namespace AppInfer.Data.Repo.Ef.UserEntite
 
         public async Task<List<Admin>> GetAll(CancellationToken cancellation)
         {
-            var models = await _context.Admin.ToListAsync(cancellation);
+            var models = await _context.Admin.Include(x => x.IsDeleted == false).ToListAsync(cancellation);
             return models;
         }
 
         public async Task<Admin> GetById(int adminId, CancellationToken cancellation)
         {
-           var model = await _context.Admin.AsNoTracking().FirstOrDefaultAsync(x=>x.Id== adminId,cancellation);
+           var model = await _context.Admin.Include(x => x.IsDeleted == false).AsNoTracking().FirstOrDefaultAsync(x=>x.Id== adminId,cancellation);
             return model;
         }
     }

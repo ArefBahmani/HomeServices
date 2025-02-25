@@ -32,7 +32,7 @@ namespace AppDomain.Service.SubCategoryEntite
            return await _subCategoryRepository.GetAll(cancellationToken);
         }
 
-        public async Task<GetSubCategoryDto> GetById(int id, CancellationToken cancellationToken)
+        public async Task<SubCategory> GetById(int id, CancellationToken cancellationToken)
         {
            return await _subCategoryRepository.GetById(id, cancellationToken);
         }

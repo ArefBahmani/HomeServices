@@ -21,6 +21,7 @@ namespace AppInfer.Db.Sql.Ef.Configs.CategoryEntite
                 Id = 1,
                 Name = "تمیزکاری",
                 CreateDate = new DateTime(2024, 1, 1, 12, 0, 0),
+                
                
             },
             new Category

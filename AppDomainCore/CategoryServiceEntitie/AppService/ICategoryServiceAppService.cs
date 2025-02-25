@@ -10,7 +10,7 @@ namespace AppDomainCore.CategoryServiceEntitie.AppService
 {
     public interface ICategoryServiceAppService
     {
-        public Task<bool> Creat(CategoryService categoryService, CancellationToken cancellationToken);
+        public Task<bool> Creat(CreateCategoryService categoryService, CancellationToken cancellationToken);
         public Task<bool> Delete(int id, CancellationToken cancellationToken);
         public Task<bool> Edit(int id, CategoryService categoryService, CancellationToken cancellationToken);
         public Task<GetCategoryServiceDto> GetById(int id, CancellationToken cancellationToken);

@@ -1,4 +1,6 @@
-﻿using AppDomainCore.UserEntite.AppService.AdminAppService;
+﻿using AppDomainCore.BaseEntity.Service;
+using AppDomainCore.SubCategoryEntite.Entite;
+using AppDomainCore.UserEntite.AppService.AdminAppService;
 using AppDomainCore.UserEntite.Data;
 using AppDomainCore.UserEntite.Dtos.AdminDtos;
 using AppDomainCore.UserEntite.Entiteies;
@@ -12,13 +14,16 @@ namespace AppDomain.AppService.UserEntite
 {
     public class AdminAppService : IAdminAppService
     {
+        private readonly IBaseService _baseSevices;
         private readonly IAdminRepository  _adminRepository;
-        public AdminAppService(IAdminRepository adminAppService)
+        public AdminAppService(IAdminRepository adminAppService, IBaseService baseService)
         {
             _adminRepository = adminAppService;
+            _baseSevices = baseService;
         }
         public async Task<bool> Create(AdminCreateDto adminCreateDto, CancellationToken cancellationToken)
         {
+            adminCreateDto.Image = await _baseSevices.UploadImage("Adminn", adminCreateDto.ProfileImgFile!, cancellationToken);
             return await _adminRepository.Add(adminCreateDto, cancellationToken);
         }
 

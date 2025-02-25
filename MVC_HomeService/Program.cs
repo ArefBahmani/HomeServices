@@ -123,7 +123,7 @@ builder.Services.AddScoped<ICustomerAppService, CustomerAppService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 
 builder.Services.AddScoped<IBaseService, BaseService>();
-builder.Services.AddScoped<IBaseAppService, BaseAppService>();
+
 
 builder.Services.AddScoped<IAccountAppService, AccountAppService>();
 

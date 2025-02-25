@@ -2,6 +2,7 @@
 using AppDomainCore.RequestEntite.Enums;
 using AppDomainCore.SuggestionEntite.Entite;
 using AppDomainCore.UserEntite.Entiteies;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,5 +29,6 @@ namespace AppDomainCore.RequestEntite.Dtos
         [DisplayName("عکس ها")]
         public string? Image { get; set; }
         public DateTime? DoneAt { get; set; }
+        public IFormFile? ProfileImgFile { get; set; }
     }
 }

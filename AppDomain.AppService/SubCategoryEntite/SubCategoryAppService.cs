@@ -1,4 +1,5 @@
-﻿using AppDomainCore.SubCategoryEntite.AppService;
+﻿using AppDomainCore.BaseEntity.Service;
+using AppDomainCore.SubCategoryEntite.AppService;
 using AppDomainCore.SubCategoryEntite.Dtos;
 using AppDomainCore.SubCategoryEntite.Entite;
 using AppDomainCore.SubCategoryEntite.Service;
@@ -12,13 +13,16 @@ namespace AppDomain.AppService.SubCategoryEntite
 {
     public class SubCategoryAppService : ISubCategoryAppService
     {
+        private readonly IBaseService _baseSevices;
         private readonly ISubCategoryService _subCategoryService;
-        public SubCategoryAppService(ISubCategoryService subCategoryService)
+        public SubCategoryAppService(ISubCategoryService subCategoryService, IBaseService baseService)
         {
             _subCategoryService = subCategoryService;
+            _baseSevices = baseService;
         }
         public async Task<bool> Creat(CreateSubCategoryDto subCategory, CancellationToken cancellationToken)
         {
+            subCategory.Image = await _baseSevices.UploadImage("SubCategory", subCategory.ProfileImgFile!, cancellationToken);
             return await _subCategoryService.Creat(subCategory, cancellationToken);
         }
 
@@ -32,7 +36,7 @@ namespace AppDomain.AppService.SubCategoryEntite
             return await _subCategoryService.GetAll(cancellationToken);
         }
 
-        public async Task<GetSubCategoryDto> GetById(int id, CancellationToken cancellationToken)
+        public async Task<SubCategory> GetById(int id, CancellationToken cancellationToken)
         {
            return await _subCategoryService.GetById(id, cancellationToken);
         }

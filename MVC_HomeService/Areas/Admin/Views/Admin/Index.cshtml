@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     Layout = "_layout";
     ViewData["Title"] = "پیشخوان";
 }
@@ -19,7 +20,7 @@
                         <a href="#">
                             <div class="stat">
                                 @* <div class="counter-down"><div class="num">@Model.DashboardData.UserCount</div></div> *@
-                                <div class="h3">کاربر</div>
+                                <div class="h3">مشتریان</div>
                             </div><!-- /.stat -->
                             <div class="visual">
                                 <i class="icon-people"></i>
@@ -32,10 +33,36 @@
                         <a href="#">
                             <div class="stat">
                                 @* <div class="counter-down"><div class="num">@Model.DashboardData.CategoryCount</div></div> *@
+                                <div class="h3"> گروه ها</div>
+                            </div><!-- /.stat -->
+                            <div class="visual">
+                                <i class="fas fa-folder"></i>
+                            </div><!-- /.visual -->
+                        </a>
+                    </div><!-- /.stat-box -->
+                </div><!-- /.col-lg-3 -->
+                <div class="col-lg-3 col-6">
+                    <div class="stat-box use-blue shadow">
+                        <a href="#">
+                            <div class="stat">
+                                @* <div class="counter-down"><div class="num">@Model.DashboardData.CategoryCount</div></div> *@
                                 <div class="h3">تعداد دسته بندی ها</div>
                             </div><!-- /.stat -->
                             <div class="visual">
-                                <i class="icon-present"></i>
+                                <i class="fas fa-folder-open"></i>
+                            </div><!-- /.visual -->
+                        </a>
+                    </div><!-- /.stat-box -->
+                </div><!-- /.col-lg-3 -->
+                <div class="col-lg-3 col-6">
+                    <div class="stat-box use-blue shadow">
+                        <a href="#">
+                            <div class="stat">
+                                @* <div class="counter-down"><div class="num">@Model.DashboardData.CategoryCount</div></div> *@
+                                <div class="h3">تعداد سرویس ها</div>
+                            </div><!-- /.stat -->
+                            <div class="visual">
+                                <i class="fas fa-qrcode"></i>
                             </div><!-- /.visual -->
                         </a>
                     </div><!-- /.stat-box -->
@@ -45,23 +72,24 @@
                         <a href="#">
                             <div class="stat">
                                 @* <div class="counter-down"><div class="num">@Model.DashboardData.AdvertisementCount</div></div> *@
-                                <div class="h3">تعداد آگهی ها</div>
+                                <div class="h3">تعداد درخواستها</div>
                             </div><!-- /.stat -->
                             <div class="visual">
-                                <i class="icon-diamond"></i>
+                                <i class="icon-note"></i>
                             </div><!-- /.visual -->
                         </a>
                     </div><!-- /.stat-box -->
                 </div><!-- /.col-lg-3 -->
                 <div class="col-lg-3 col-6">
+                   
                     <div class="stat-box use-purple shadow">
                         <a href="#">
                             <div class="stat">
                                 @* <div class="counter-down"><div class="num">@Model.DashboardData.BrandCount</div></div> *@
-                                <div class="h3">تعداد برندها</div>
+                                <div class="h3"> کارشناسان</div>
                             </div><!-- /.stat -->
                             <div class="visual">
-                                <i class="icon-bubbles"></i>
+                                <i class="fas fa-user-secret"></i>
                             </div><!-- /.visual -->
                         </a>
                     </div><!-- /.stat-box -->

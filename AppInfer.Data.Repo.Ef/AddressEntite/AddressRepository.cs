@@ -52,7 +52,7 @@ namespace AppInfer.Data.Repo.Ef.AddressEntite
 
         public async Task<Address> GetAddressById(int addressId, CancellationToken cancellationToken)
         {
-            var model = await _context.Addresses.AsNoTracking().FirstOrDefaultAsync(x => x.Id == addressId, cancellationToken);
+            var model = await _context.Addresses.Include(x => x.IsDeleted == false).AsNoTracking().FirstOrDefaultAsync(x => x.Id == addressId, cancellationToken);
 
             return model;
 
@@ -60,7 +60,7 @@ namespace AppInfer.Data.Repo.Ef.AddressEntite
 
         public async Task<List<Address>> GetAllAddresses(CancellationToken cancellationToken)
         {
-           var models = await _context.Addresses.AsNoTracking().ToListAsync(cancellationToken);
+           var models = await _context.Addresses.Include(x => x.IsDeleted == false).AsNoTracking().ToListAsync(cancellationToken);
             return models;
         }
 
@@ -68,7 +68,7 @@ namespace AppInfer.Data.Repo.Ef.AddressEntite
 
         public async Task<bool> Update(int addressId, UpdateAddressDto address, CancellationToken cancellationToken)
         {
-            var model = await _context.Addresses.FirstOrDefaultAsync(x => x.Id == addressId, cancellationToken);
+            var model = await _context.Addresses.Include(x => x.IsDeleted == false).FirstOrDefaultAsync(x => x.Id == addressId, cancellationToken);
             model = new Address()
             {
 

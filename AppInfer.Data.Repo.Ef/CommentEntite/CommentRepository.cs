@@ -54,13 +54,13 @@ namespace AppInfer.Data.Repo.Ef.CommentEntite
 
         public async Task<List<Comment>> GetAll(CancellationToken cancellationToken)
         {
-            var models = await _context.Comments.AsNoTracking().ToListAsync(cancellationToken);
+            var models = await _context.Comments.Include(x => x.IsDeleted == false).AsNoTracking().ToListAsync(cancellationToken);
             return models;
         }
 
         public async Task<Comment> GetById(int id, CancellationToken cancellationToken)
         {
-            var model = await _context.Comments.AsNoTracking().FirstOrDefaultAsync(x=>x.Id == id,cancellationToken);
+            var model = await _context.Comments.Include(x => x.IsDeleted == false).AsNoTracking().FirstOrDefaultAsync(x=>x.Id == id,cancellationToken);
             return model;
         }
 
@@ -72,7 +72,7 @@ namespace AppInfer.Data.Repo.Ef.CommentEntite
 
         public async Task<bool> SetReaction(int expertId, int reaction, CancellationToken cancellationToken)
         {
-            var comment = await _context.Comments.FirstOrDefaultAsync(e=>e.ExpertId == expertId,cancellationToken);
+            var comment = await _context.Comments.Include(x => x.IsDeleted == false).FirstOrDefaultAsync(e=>e.ExpertId == expertId,cancellationToken);
             if (comment == null)
             {
                 return false;
@@ -87,7 +87,7 @@ namespace AppInfer.Data.Repo.Ef.CommentEntite
 
         public async Task<bool> Update(int id, CommentUpdateDto comment, CancellationToken cancellationToken)
         {
-            var model = await _context.Comments.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            var model = await _context.Comments.Include(x => x.IsDeleted == false).FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
             if (model == null)
             {
                 return false;

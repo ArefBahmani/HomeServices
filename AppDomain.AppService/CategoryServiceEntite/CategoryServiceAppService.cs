@@ -17,11 +17,18 @@ namespace AppDomain.AppService.CategoryServiceEntite
 {
     public class CategoryServiceAppService : ICategoryServiceAppService
     {
+        private readonly IBaseService _baseSevices;
         private readonly ICategoryServiceService _categoryServiceService;
-        
-
-        public async Task<bool> Creat(CategoryService categoryService, CancellationToken cancellationToken)
+        public CategoryServiceAppService(IBaseService baseService, ICategoryServiceService categoryServiceService)
         {
+            _baseSevices = baseService;
+            _categoryServiceService = categoryServiceService;
+        }
+
+
+        public async Task<bool> Creat(CreateCategoryService categoryService, CancellationToken cancellationToken)
+        {
+            categoryService.Image = await _baseSevices.UploadImage("CategoryService", categoryService.ProfileImgFile!, cancellationToken);
             return await _categoryServiceService.Creat(categoryService, cancellationToken);
         }
 
@@ -32,6 +39,7 @@ namespace AppDomain.AppService.CategoryServiceEntite
 
         public async Task<bool> Edit(int id, CategoryService categoryService, CancellationToken cancellationToken)
         {
+            categoryService.Image = await _baseSevices.UploadImage("CategoryService", categoryService.ProfileImgFile!, cancellationToken);
             return await _categoryServiceService.Edit(id, categoryService, cancellationToken);
         }
 

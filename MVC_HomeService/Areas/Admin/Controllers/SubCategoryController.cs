@@ -1,5 +1,7 @@
 ﻿using AppDomainCore.BaseEntity.Service;
 using AppDomainCore.CategoryEntitie.AppService;
+using AppDomainCore.CategoryEntitie.Dtos;
+using AppDomainCore.CategoryEntitie.Entite;
 using AppDomainCore.SubCategoryEntite.AppService;
 using AppDomainCore.SubCategoryEntite.Dtos;
 using Microsoft.AspNetCore.Mvc;
@@ -29,9 +31,11 @@ namespace MVC_HomeService.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Create(CancellationToken cancellationToken)
         {
-            var categories = await _categoryAppService.GetAll(cancellationToken);
+            var categories = await _categoryAppService.GetAll(cancellationToken) ?? new List<Category>();
             ViewBag.Categories = categories;
-            return View();
+            var model = new CreateSubCategoryDto();
+           
+            return View(model);
         }
         [HttpPost]
         public async Task<IActionResult> Create(CreateSubCategoryDto addSubCategoryDTO, CancellationToken cancellationToken)
@@ -44,18 +48,22 @@ namespace MVC_HomeService.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> UpdatePage(int Id, UpdateSubCategoryDto updateSub,CancellationToken cancellationToken)
+        [HttpGet]
+        public async Task<IActionResult> Update(int id, CancellationToken cancellationToken)
         {
-            var result = await _subCategoryAppService.Update(Id, updateSub, cancellationToken);
-            var categories = await _categoryAppService.GetAll(cancellationToken);
-            ViewBag.Categories = categories;
-            return View(result);
+            var category = await _subCategoryAppService.GetById(id, cancellationToken);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Update(UpdateSubCategoryDto updateSubCategoryDTO, int id,CancellationToken cancellationToken)
         {
-           // updateSubCategoryDTO.Image = await _baseDataService.UploadImage(updateSubCategoryDTO.ProfileImgFile!, "SubCategories", cancellationToken);
+            updateSubCategoryDTO.Image = await _baseDataService.UploadImage("SubCategory", updateSubCategoryDTO.ProfileImgFile,  cancellationToken);
             var result = await _subCategoryAppService.Update(id, updateSubCategoryDTO, cancellationToken);
             if (result == false)
             {
